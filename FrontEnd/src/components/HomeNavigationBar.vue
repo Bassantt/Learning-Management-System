@@ -3,13 +3,12 @@
     <div class="navbar-list">
       <router-link to="/">
         <ul id="firstul">
-          <img src="../assets/unnamed.png" id="logo" />
+          <img src="../assets/LMS-5-warning-signs-1-1150x642.png" id="logo" />
           <li>
             Learning-Management-System
           </li>
         </ul>
       </router-link>
-
       <ul id="secul">
         <router-link to="/" tag="li">
           <a>Home</a>

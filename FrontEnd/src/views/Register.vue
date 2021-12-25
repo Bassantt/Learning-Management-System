@@ -5,39 +5,35 @@
       <div>
         <form class="row  align-items-center">
           <div class="col-auto">
+            <label class="visually-hidden">Username</label>
             <input
               type="text"
-              v-model="Name"
+              v-model="Username"
               class="form-control"
               id="autoSizingInput"
-              placeholder="Name"
+              placeholder="Username"
             />
-  
-          <el-select
+            <input
+              type="password"
+              v-model="Password"
               class="form-control"
-              v-model="UserType"
-              placeholder="UserType"
-            >
-              <el-option
-                id="opt"
-                class="form-control"
-                label="User"
-                value="User"
-              ></el-option>
-              <el-option
-                id="opt"
-                class="form-control"
-                label="Admin"
-                value="Admin"
-              ></el-option>
-               <el-option
-                id="opt"
-                class="form-control"
-                label="Developer"
-                value="Developer"
-              ></el-option>
-
-            </el-select>
+              id="autoSizingInput"
+              placeholder="Password"
+            />
+            <input
+              type="text"
+              v-model="FirstName"
+              class="form-control"
+              id="autoSizingInput"
+              placeholder="FirstName"
+            />
+            <input
+              type="text"
+              v-model="LastName"
+              class="form-control"
+              id="autoSizingInput"
+              placeholder="LastName"
+            />
             <input
               type="text"
               v-model="Email"
@@ -45,19 +41,31 @@
               id="autoSizingInput"
               placeholder="Email"
             />
+            <el-select
+              class="form-control"
+              v-model="Type"
+              placeholder="Type"
+            >
+              <el-option
+                id="opt"
+                class="form-control"
+                label="Admin"
+                value="Admin"
+              ></el-option>
+              <el-option
+                id="opt"
+                class="form-control"
+                label="Customer"
+                value="Customer"
+              ></el-option>
+            </el-select>
+            <p >BirthDate</p>
             <input
-              type="number"
-              v-model="Phone"
+              type="date"
+              v-model="BirthDate"
               class="form-control"
               id="autoSizingInput"
-              placeholder="Phone"
-            /><label class="visually-hidden">Password</label>
-            <input
-              type="password"
-              v-model="Password"
-              class="form-control"
-              id="autoSizingInput"
-              placeholder="Password"
+              placeholder="BirthDate"
             />
             <button @click="AddMember" type="submit" class="btn btn-primary">
               Sgin Up
@@ -79,30 +87,33 @@ export default {
   },
   data() {
     return {
-      Name: "",
+      Username:"",
       Password: "",
+      FirstName: "",
+      LastName: "",
       Email: "",
-      UserType: "",
-      Phone: "",
+      Type: ""
     };
   },
   methods: {
     AddMember(e) {
       const newMember = {
-        Name: this.Name,
+        Username: this.Username,
         Password: this.Password,
+        FirstName: this.FirstName,
+        LastName: this.LastName,
         Email: this.Email,
-        UserType: this.UserType,
-        Phone: this.Phone,
+        Type: this.Type
       };
       console.log(newMember);
       this.$store.dispatch("Authorization/signup", newMember);
       e.preventDefault();
-      this.Name = "";
+      this.Username = "";
       this.Password = "";
+      this.FirstName = "";
+      this.LastName = "";
       this.Email = "";
-      this.Phone = "";
-      this.UserType = "";
+      this.Type = "";
     },
   },
    computed: {
@@ -116,7 +127,8 @@ export default {
 <style scoped>
 .cont {
   height: 753px;
-  background-color: rgba(107, 97, 84, 0.288);
+  background-image: url('../assets/Learning-Management@2x-1024x760.png');
+  background-size: cover;
 }
 .col-auto {
   margin: 20px auto;
@@ -140,6 +152,10 @@ input,.form-control
   margin-left: 35%;
   margin-top: 150px;
   padding: 10px;
+}
+p
+{
+  color: white;
 }
 
 </style>

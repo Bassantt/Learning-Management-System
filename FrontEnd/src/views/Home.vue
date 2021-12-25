@@ -3,70 +3,20 @@
     <HomeNavigation />
     <div class=" row justify-content-center home px-0 m-0">
       <div class="justify-content-center divcont ">
-      <h3 >Search worldwide news with code</h3>
-      <h6 >Locate articles and breaking news headlines from news </h6>
-        <h6>sources and blogs across the web with our JSON API</h6>
+      <h3 >Learning-Management-System</h3>
+      <h6 >Learning-Management-SystemLearning-Management-System</h6>
+        <h6>Learning-Management-SystemLearning-Management-SystemLearning-Management-System</h6>
       <router-link 
             :to="{ path: '/UserPage/' +userid}"
             tag="li"
             v-if="isLoggedIn =='success' "  >
-          <a>Get API KEY</a>
+          <a>My Page</a>
           </router-link>
           <router-link to="/Register" tag="li" v-if="isLoggedIn !='success' "  >
-          <a>Get API KEY</a>
+          <a>Get Start</a>
           </router-link>
       </div>
-      <div v-if="usertype=='User'">
-        <br/>
-        <p>Search By Data </p>
-                      Start Data
-                      <input
-              type="number"
-              v-model="day2"
-              class="form-control"
-              id="autoSizingInput"
-              placeholder="day"
-            />
-            <input
-              type="number"
-              v-model="month2"
-              class="form-control"
-              id="autoSizingInput"
-              placeholder="month"
-            />
-            <input
-              type="number"
-              v-model="year2"
-              class="form-control"
-              id="autoSizingInput"
-              placeholder="year"
-            />
-            <br/>
-          End Date
-           <input
-              type="number"
-              v-model="day1"
-              class="form-control"
-              id="autoSizingInput"
-              placeholder="day"
-            />
-            <input
-              type="number"
-              v-model="month1"
-              class="form-control"
-              id="autoSizingInput"
-              placeholder="month"
-            />
-            <input
-              type="number"
-              v-model="year1"
-              class="form-control"
-              id="autoSizingInput"
-              placeholder="year"
-            />
-            <br/>
-            <Button class="btn float-right _btn" @click="Search()" >Go</Button>
-      </div>
+
        <div class="row">
           <Templete
         v-for="artical in articals"
@@ -211,12 +161,10 @@ a:hover {
  }
 .divcont
 {
-  width: 50%;
-  height: 300px;
-  background-color:white;
-  border-radius: 20px;
-  margin-top: 80px;
-  border: black 2px solid;
+  width: 100%;
+  height: 700px;
+  background-image: url('../assets/back.png');
+  background-size: cover;
 }
 input
 {

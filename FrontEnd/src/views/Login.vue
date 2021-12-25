@@ -10,7 +10,7 @@
 			<div class="card-body">
 				
 					<div class="input-group form-group">
-						<input  v-model="Email" type="text" class="form-control" placeholder="Email">
+						<input  v-model="Username" type="text" class="form-control" placeholder="Username">
 						
 					</div>
 					<div class="input-group form-group">
@@ -39,7 +39,7 @@ export default {
   },
     data: function () {
     return {
-      Email: "",
+      Username: "",
       Password: "",
       //validation
       trigger_validation: false,
@@ -48,16 +48,16 @@ export default {
   },
   methods: {
     login() {
-      console.log(this.Email);
+      console.log(this.Username);
       console.log(this.Password);
       this.trigger_validation = true;
       this.can_submit = true;
-      this.req_email;
+      this.req_username;
       this.req_password;
       setTimeout(() => {
         if (this.can_submit) {
           let user = {
-            Email: this.Email,
+            Username: this.Username,
             Password: this.Password
           };
           this.$store.dispatch("Authorization/login", user);
@@ -75,7 +75,7 @@ export default {
 
 
 .cont{
-background-image: url('../assets/homeback.jpg');
+background-image: url('../assets/odgservices_lifestyle4.png');
 background-size: cover;
 background-repeat: no-repeat;
 height: 100%;
