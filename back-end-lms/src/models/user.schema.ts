@@ -26,4 +26,7 @@ export class User {
   @prop({ required: true })
   @IsString()
   type: string;
+  @prop({ required: true })
+  @IsString()
+  role: string;
 }

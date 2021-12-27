@@ -11,7 +11,9 @@ export class RegisterDto {
   @IsString()
   lastName: string;
   @IsString()
-  type: string;
+  type?: string;
+  @IsString()
+  role?: string;
   @IsString()
   brithDay: string;
 }

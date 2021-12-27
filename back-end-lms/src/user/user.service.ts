@@ -25,9 +25,13 @@ export class UserService {
             throw new HttpException('"email" should not have acount', HttpStatus.FORBIDDEN,);
         if (await this.UserRepository.findByEmailORUserName(createUserDto.userName))
             throw new HttpException('"userName"  is used before', HttpStatus.FORBIDDEN,);
+
         const salt = await bcrypt.genSalt(10);
         let hash = await bcrypt.hash(createUserDto.password, salt);
         createUserDto.password = hash;
+        if (!createUserDto.type) { createUserDto.type = "customer"; createUserDto.role = "Learner"; }
+        else if (createUserDto.type == "admin") createUserDto.role = "Instructor";
+        else createUserDto.role = "Learner";
         return await this.UserRepository.createUser(createUserDto);
     }
 
