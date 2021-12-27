@@ -1,5 +1,6 @@
 import { prop, Ref } from '@typegoose/typegoose';
 import { IsString, IsEmail, Length } from 'class-validator';
+import { Course } from './course.schema';
 
 export class User {
   @prop({ required: true })
@@ -23,10 +24,13 @@ export class User {
   @prop({ required: true })
   @IsString()
   brithDay: string;
-  @prop({ required: true })
+  @prop({ required: false, default: "customer" })
   @IsString()
-  type: string;
-  @prop({ required: true })
+  type?: string;
+  @prop({ required: false, default: "Learner" })
   @IsString()
-  role: string;
+  role?: string;
+  @prop({ required: false, default: [] })
+  @prop({ ref: Course })
+  courses?: [Ref<Course>];
 }
