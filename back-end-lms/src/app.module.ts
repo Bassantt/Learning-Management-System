@@ -3,6 +3,10 @@ import { TypegooseModule } from "nestjs-typegoose";
 import { AuthModule } from './auth/auth.module';
 import { UserModule } from './user/user.module';
 import { SharedModule } from './shared/shared.module';
+import { CourseController } from './course/course.controller';
+import { CourseService } from './course/course.service';
+import { CourseModule } from './course/course.module';
+import { QuestionModule } from './question/question.module';
 
 
 @Module({
@@ -13,8 +17,10 @@ import { SharedModule } from './shared/shared.module';
     AuthModule,
     UserModule,
     SharedModule,
+    CourseModule,
+    QuestionModule,
   ],
-  controllers: [],
-  providers: [],
+  controllers: [CourseController],
+  providers: [CourseService],
 
 }) export class AppModule { }
