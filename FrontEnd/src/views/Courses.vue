@@ -1,0 +1,124 @@
+ <template>
+  <div class="cont">
+      <HomeNavigation />
+    <div>
+      <div class="contaner" >
+        <div class="all scroll">
+          <h2>show All</h2>
+          <div class="row">
+            <CourseCard
+              class="col-lg-10% col-md-60% col-xs-6"
+              v-for="Course in courses"
+              :key="Course.id"
+              :name="Course.name"
+              :CourseId="Course._id"
+              :description="Course.description"
+              :infoins="Course.infoins"
+              :ins="Course.ins"
+            />
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</template>
+
+<style scoped>
+.last {
+  margin-bottom: 200px;
+}
+.img-card {
+  width: 100%;
+  height: 80px;
+}
+.card-top {
+  background-color: #313030;
+  padding: 20px;
+  height: 250px;
+}
+*:focus {
+  outline: none;
+}
+.cont {
+  margin-bottom: 25px; 
+  height: 100vh;
+}
+.scroll {
+  height: 100%;
+  overflow-x: visible;
+  overflow-y: auto;
+}
+.all {
+  width: 100%;
+}
+.margin {
+  margin: 20px;
+}
+.row {
+  margin-bottom: 15px;
+  width: 95%;
+}
+h2 {
+  font-size: 28px;
+  font-weight: bold;
+  color: white;
+  margin-bottom: 5px;
+  float: left;
+}
+.container {
+  margin-left: 15px;
+  height: 100vh;
+  width: 100%;
+}
+
+</style>
+
+<script>
+import CourseCard from "@/components/CourseCard.vue";
+import HomeNavigation from "@/components/HomeNavigationBar.vue";
+// import { mapGetters } from "vuex";
+export default {
+  name: "Courses",
+  components: {
+    CourseCard,
+    HomeNavigation
+  },
+  data(){
+      return{
+    courses:[
+      {
+        _id : "1111",
+        name : "bosy",
+        description : "mjjj",
+        infoins : "plp",
+        ins : "$c^",
+      },
+          {
+        _id : "1111",
+        name : "bosy",
+        description : "mjjj",
+        infoins : "plp",
+        ins : "$c^",
+      },
+          {
+        _id : "1111",
+        name : "bosy",
+        description : "mjjj",
+        infoins : "plp",
+        ins : "$c^",
+      },
+       
+       ]
+  }
+  },
+  mounted() {
+    // this.$store.dispatch("Courses/showCourses");
+  },
+//   computed: {
+//     ...mapGetters({
+//       Courses: "Courses/getCourses",
+//     })
+//   }
+};
+</script>

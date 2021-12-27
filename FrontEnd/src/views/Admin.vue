@@ -15,8 +15,6 @@
         :Phone="user.Phone"
       />
     </div>
-    <Button class="btn float-right _btn" @click="UpdateArticals()" >Update Articals</Button>
-    <Button class="btn float-right _btn" @click="ClearArticals()" >Clear Articals</Button>
     <p v-if="getloading==true">this will take some time</p>
     <div class="spinner-grow text-primary pos" role="status" v-if="getloading==true">
     </div> 

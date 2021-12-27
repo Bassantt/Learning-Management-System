@@ -2,56 +2,30 @@
   <div class="cont">
     <HomeNavigation />
   <div class=" row justify-content-center home px-0 m-0">
-    <ul id="api">
-      API Key
-      <br/>
-      {{user.apiKey}}
-    </ul>
-    <div class="col-sm-70%" id="white_div" v-if="editemode==true">
-        <h1>Account overview</h1>
+     <div class="col-sm-70%" id="edit_div" >
+        <h2>My Profile</h2>
+        <p>Your Type is : {{user.Type}}</p>
         <ul>
           <li>
-            <span class="p1">Name : </span>
-            <span class="p2">{{ user.Name }}</span>
+            Username :<input id="username"  v-model="user.Username" type="text" class="form-control" >
           </li>
           <li>
-            <span class="p1">Email : </span>
-            <span class="p3">{{ user.Email }}</span>
+           FirstName : <input  v-model="user.FirstName" type="text" class="form-control" >
           </li>
           <li>
-            <span class="p1">Phone : </span>
-            <span class="p5">{{ user.Phone }}</span>
-          </li>
-        </ul>
-          <button class="trans_button" @click="edite()">
-            EDITE PROFILE
-          </button>
-    </div>
-     <div class="col-sm-70%" id="edit_div" v-if="editemode!=true">
-        <h1>Account Edite</h1>
-        <ul>
-          <li>
-            <span class="p1">Name : </span>
-             <span class="p2">{{ user.Name }}</span>
-            <input  v-model="Name" type="text" class="form-control" placeholder="Enter what you want">
+           LastName :<input  v-model="user.LastName" type="text" class="form-control" >
           </li>
           <li>
-            <span class="p1">Email : </span>
-            <span class="p3">{{ user.Email }}</span>
-            <input  v-model="Email" type="text" class="form-control" placeholder="Enter what you want">
+           Email :<input  v-model="user.Email" type="text" class="form-control" >
           </li>
           <li>
-            <span class="p1">Phone : </span>
-            <span class="p5">{{ user.Phone }}</span>
-             <input  v-model="Phone" type="text" class="form-control" placeholder="Enter what you want">
+           BirthDate : <input  v-model="user.BirthDate" type="date" class="form-control" >
           </li>
           <li>
-            <span class="p1">New Password if you want change the current</span>
-             <input  v-model="NewPassword" type="Password" class="form-control" placeholder="Enter Your Password">
+            NewPassword : <input  v-model="user.NewPassword" type="Password" class="form-control" >
           </li>
-            <li>
-            <span class="p1">Please Enter your Password to save change/s</span>
-             <input  v-model="Password" type="Password" class="form-control" placeholder="Enter Your Password">
+          <li>
+            Password : <input  v-model="user.Password" type="Password" class="form-control" placeholder="Enter Your password">
           </li>
         </ul>
           <button class="trans_button" @click="save()">
@@ -72,13 +46,17 @@ export default {
   },
   data(){
       return{
-          api_key:"",
-          editemode:true,
-          Name:"",
-          Email:"",
-          Phone:"",
-          Password:"",
-          NewPassword:""
+        user:
+      {
+        id:"1",
+        Username : "bosy",
+        Password : "1111",
+        FirstName : "mjjj",
+        LastName : "plp",
+        Email : "$c^",
+        Type : "jj",
+        BirthDate:"2021-05-30"
+      },
   }
   },
    computed: {
@@ -91,27 +69,21 @@ export default {
   },
   methods:
   {
-    edite()
-    {
-      this.editemode=false;
-    },
      save()
     {
         const newdata = {
-        Name: this.Name,
-        Password: this.Password,
-        Email: this.Email,
-        Phone: this.Phone,
-        NewPassword:this.NewPassword
+        Username: this.user.Username,
+        Password: this.user.Password,
+        FirstName: this.user.FirstName,
+        LastName: this.user.LastName,
+        Email: this.user.Email,
+        Type: this.user.Type,
+        BirthDate:this.user.BirthDate,
+        NewPassword:this.user.NewPassword
       };
       console.log(newdata);
       this.$store.dispatch("Authorization/edite", newdata);
-      this.Name = "";
-      this.Password = "";
-      this.Email = "";
-      this.Phone = "";
-      this.NewPassword="";
-      this.editemode=true;
+      alert("done")
     }
   }
 };
@@ -126,14 +98,7 @@ ul li {
   margin-bottom: 3%;
   border-bottom: 1px solid rgb(214, 214, 214);
 }
-#api
-{
-  background-color: rgba(82, 145, 156, 0.185);
-  border-radius: 30px;
-  margin-top: 80px;
-  margin-top: 40px;
-  width: 68.5%;
-}
+
 .cont {
   background-color: rgb(37, 91, 122);
 }
@@ -141,12 +106,12 @@ ul li {
   
   background-repeat: no-repeat;
   width: 100%;
-  height: 802px;
+  height: 763px;
   background-position: center;
   background-size: 100% 100%;
   position:absolute;
-   background-color: rgba(107, 97, 84, 0.288);
-    color: black;
+  background-color: rgba(10, 10, 10, 0.267);
+  color: black;
 }
 #edit_div
 {
@@ -155,46 +120,12 @@ ul li {
   padding-right: 5%;
   padding-bottom: 5%;
   position: relative;
-  background-color: rgba(82, 145, 156, 0.308);
+  background-color: rgba(82, 145, 156, 0.178);
   border-radius: 30px;
-  margin-bottom: 500px;
+  margin-top: 10px;
   text-align: center;
-}
-#white_div {
-  width: 68.5%;
-  height: 50%;
-  padding-right: 5%;
-  padding-bottom: 5%;
-  position: relative;
-  background-color: rgba(82, 145, 156, 0.308);
-  border-radius: 30px;
-  margin-bottom: 500px;
-  text-align: center;
-}
-@media screen and (max-width: 1000px) {
-  h1 {
-    font-size: 55px;
-    font-weight: 750;
-    letter-spacing: -0.04em;
-    line-height: 1.15;
-    margin-top: 0;
-    text-align: center;
-    width: 100%;
-  }
-  h4 {
-    font-size: 16px;
-    font-weight: 400;
-    text-align: center;
-    width: 100%;
-  }
 }
 
-.api
-{
-background-color: rgba(15, 11, 11, 0.452);
-  border-radius: 10px;
-  margin-top: 100px;
-}
 .trans_button {
   outline: none;
   height: 50px;
@@ -206,8 +137,7 @@ background-color: rgba(15, 11, 11, 0.452);
   font-size: 14px;
   font-weight: bold;
   margin-left: 5%;
-  margin-top: 1%;
-  margin-bottom: 10%;
+  margin-top: 1px;
 }
 .trans_button:hover {
   height: 52px;
@@ -217,10 +147,15 @@ background-color: rgba(15, 11, 11, 0.452);
 }
 input
 {
-  width: 50%;
+  width: 60%;
   border-radius: 10px;
-  margin-left: 25%;
+  margin-right: 5%;
   margin-bottom: 2px;
+  display:inline;
+  background-color:transparent;
 }
-
+h2
+{
+  margin-top: 20px;
+}
 </style>

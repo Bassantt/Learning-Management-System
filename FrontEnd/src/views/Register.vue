@@ -92,7 +92,8 @@ export default {
       FirstName: "",
       LastName: "",
       Email: "",
-      Type: ""
+      Type: "",
+      BirthDate:""
     };
   },
   methods: {
@@ -103,7 +104,8 @@ export default {
         FirstName: this.FirstName,
         LastName: this.LastName,
         Email: this.Email,
-        Type: this.Type
+        Type: this.Type,
+        BirthDate:this.BirthDate
       };
       console.log(newMember);
       this.$store.dispatch("Authorization/signup", newMember);
@@ -150,7 +152,7 @@ input,.form-control
   width: 30%;
   border-radius: 10px;
   margin-left: 35%;
-  margin-top: 150px;
+  margin-top: 110px;
   padding: 10px;
 }
 p

@@ -4,8 +4,8 @@
     <div class=" row justify-content-center home px-0 m-0">
       <div class="justify-content-center divcont ">
       <h3 >Learning-Management-System</h3>
-      <h6 >Learning-Management-SystemLearning-Management-System</h6>
-        <h6>Learning-Management-SystemLearning-Management-SystemLearning-Management-System</h6>
+      <h6 >Learning-Management-System Learning-Management-System</h6>
+      <h6>Learning-Management-System Learning-Management-System</h6>
       <router-link 
             :to="{ path: '/UserPage/' +userid}"
             tag="li"
@@ -17,83 +17,26 @@
           </router-link>
       </div>
 
-       <div class="row">
-          <Templete
-        v-for="artical in articals"
-        :key="artical.articleID"
-        :Id="artical.articleID"
-        :author="artical.author"
-        :closingDate="artical.closingDate"
-        :content="artical.content"
-         :description="artical.description"
-        :name="artical.name"
-         :publishDate="artical.publishDate"
-        :publishedAt="artical.publishedAt"
-         :title="artical.title"
-        :url="artical.url"
-         :urlToImage="artical.urlToImage"/>
-      </div> 
      </div>
   </div>
 </template>
 
 <script>
 import HomeNavigation from "@/components/HomeNavigationBar.vue";
-import Templete from "@/components/Templete.vue";
 import { mapGetters } from "vuex";
 export default {
   name: "Home",
   components: {
-    HomeNavigation,Templete
-  },
-    data() {
-    return {
-      year1: "",
-      month1: "",
-      day1: "",
-      year2: "",
-      month2: "",
-      day2: "",
-    };
+    HomeNavigation
   },
    computed: {
     ...mapGetters({
       isLoggedIn: "Authorization/GetStatus",
       usertype:"Authorization/usertype",
       Username:"Authorization/Username",
-       userid: "Authorization/userid",
-       articals: "Authorization/getarticals",
+      userid: "Authorization/userid",
     })
-  } ,
-  created: function () {
-    this.$store.dispatch("Authorization/showarticals");
-  },
-  methods:
-  {
-    Search()
-    {
-    const search_bar = {
-        year1: this.year1,
-        month1: this.month1,
-        day1: this.day1,
-        year2: this.year2,
-        month2: this.month2,
-        day2:this.day2
-      };
-      console.log(search_bar);
-      if(this.year1!=""&&this.month1!=""&&this.day1!=""&&this.year2!=""&&this.month2!=""&&this.day2!="")
-      {
-      this.$store.dispatch("Authorization/searchstartend",search_bar);
-      }
-      else if(this.year1!=""&&this.month1!=""&&this.day1!="")
-      {
-      this.$store.dispatch("Authorization/searchstart",search_bar);
-      }
-      else{
-        alert("please enter start data or start and end");
-      }
-    }
-  }
+  } 
 };
 </script>
 
@@ -109,7 +52,7 @@ export default {
   background-position: center;
   background-size: 100% 100%;
   position:absolute;
-  color: black;
+  color: black; 
 }
 .headers {
   justify-content: center;
@@ -124,7 +67,7 @@ h3 {
   font-size: 40px;
   letter-spacing: -0.04em;
   line-height: 0;
-  margin-top: 100px;
+  margin-top: 400px;
   margin-bottom: 50px;
   text-align: center;
   width: 100%;
@@ -162,7 +105,7 @@ a:hover {
 .divcont
 {
   width: 100%;
-  height: 700px;
+  height: 673px;
   background-image: url('../assets/back.png');
   background-size: cover;
 }
