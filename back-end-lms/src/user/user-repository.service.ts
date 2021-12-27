@@ -4,6 +4,9 @@ import { RegisterDto } from '../auth/dto/register.dto';
 import { ModelType } from 'typegoose';
 import { InjectModel } from "nestjs-typegoose";
 import { BaseRepository } from "../shared/repository/base.service";
+import * as bcrypt from 'bcrypt';
+import { UpdatDto } from './dto/update.dto';
+
 const ObjectId = require('mongoose').Types.ObjectId;
 
 @Injectable()
@@ -18,12 +21,29 @@ export class UserRepository extends BaseRepository<User>  {
     async findByEmailORUserName(identifier: string) {
         return await this.findOne({ $or: [{ email: identifier }, { userName: identifier }] });
     }
-
+        async findByUserName(userName: string) {
+            return await this.findOne({ userName: userName });
+        }
+   
     async createUser(userData: RegisterDto) {
         return await this.create(userData);
     }
+    
+    async changeUSerRole(userName, adminId) {
+        const admin = await this.findByID(adminId);
+        if (!admin && admin.type != "admin") throw new HttpException('this task can be done only be admins', HttpStatus.UNAUTHORIZED);
+        const user = await this.findByEmailORUserName(userName);
+        if (user && (user.role && user.role == "Learner") || !user.role) await this.update(user.id, { role: "Instructor" })
+        else throw new HttpException('user is instrucror', HttpStatus.BAD_REQUEST);
+    }
 
-
+    async updateUserData(id: any, updateInfo: UpdatDto): Promise<boolean> {
+        const user = await this.findByID(id);
+        if (updateInfo.userName && await this.findByUserName(updateInfo.userName)) throw new HttpException('This userName exists', HttpStatus.BAD_REQUEST);
+        if (updateInfo.password && !updateInfo.oldPassword) throw new HttpException('To update password should enter password', HttpStatus.BAD_REQUEST);
+        if (! await bcrypt.compare(updateInfo.oldPassword, user.password)) throw new HttpException('old password is not correct', HttpStatus.FORBIDDEN);
+        return await this.update(id, updateInfo)
+    }
 
 
 
