@@ -14,12 +14,12 @@ export class QuestionRepository extends BaseRepository<Question>  {
         super();
         this._Model = _questionModel;
     }
-    /*
-        async createQuestion(question: { course: any, question: string }) {
-            question.course = ObjectId(question.course);
-            return await this.create(question);
-        }
-    */
+
+    async createQuestion(question: { course: any, question: string }) {
+        question.course = ObjectId(question.course);
+        return await this.create(question);
+    }
+
     async addReplayToQuestion(questionId, userId, userName: string, reply: string) {
         return this.update(questionId, { $push: { replies: { user: userId, userName: userName, reply: reply } } })
     }

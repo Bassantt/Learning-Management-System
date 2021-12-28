@@ -37,6 +37,9 @@ export class CourseRepository extends BaseRepository<Course>  {
         return course;
     }
 
+    async getAllCourses(){
+        return await this.findAll();
+    }
 
 
 

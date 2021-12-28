@@ -23,6 +23,12 @@ export abstract class BaseRepository<T> implements IWrite<T>, IRead<T>  {
         return await this._Model.find(files).exec();
     }
 
+    async findSunset(files: {}, projection: {}) {
+        return await this._Model.findOne(files, projection).exec();
+    }
+
+
+
     async create(createUserDto: T) {
         const createdUser = new this._Model(createUserDto);
         await createdUser.save();
