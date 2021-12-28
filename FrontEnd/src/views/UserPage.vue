@@ -3,29 +3,30 @@
     <HomeNavigation />
   <div class=" row justify-content-center home px-0 m-0">
      <div class="col-sm-70%" id="edit_div" >
-        <h2>My Profile</h2>
-        <p>Your Type is : {{user.Type}}</p>
+        <h2>My Profile</h2>{{user}}
+        <p>Your Type is : {{user.user.type}}</p>
+        {{user.user.userName}}
         <ul>
           <li>
-            Username :<input id="username"  v-model="user.Username" type="text" class="form-control" >
+            Username :<input id="username"  v-model="user.user.userName" type="text" class="form-control" >
           </li>
           <li>
-           FirstName : <input  v-model="user.FirstName" type="text" class="form-control" >
+           FirstName : <input v-model="user.user.firstName" type="text" class="form-control" >
           </li>
           <li>
-           LastName :<input  v-model="user.LastName" type="text" class="form-control" >
+           LastName :<input  v-model="user.user.lastName" type="text" class="form-control" >
           </li>
           <li>
-           Email :<input  v-model="user.Email" type="text" class="form-control" >
+           Email :<input  v-model="user.user.email" type="text" class="form-control" >
           </li>
           <li>
-           BirthDate : <input  v-model="user.BirthDate" type="date" class="form-control" >
+           BirthDate : <input  v-model="user.user.brithDay" type="date" class="form-control" >
           </li>
           <li>
-            NewPassword : <input  v-model="user.NewPassword" type="Password" class="form-control" >
+            NewPassword : <input  v-model="password" type="Password" class="form-control" >
           </li>
           <li>
-            Password : <input  v-model="user.Password" type="Password" class="form-control" placeholder="Enter Your password">
+            Password : <input  v-model="oldPassword" type="Password" class="form-control" placeholder="Enter Your password">
           </li>
         </ul>
           <button class="trans_button" @click="save()">
@@ -44,21 +45,12 @@ export default {
   components: {
     HomeNavigation
   },
-  data(){
-      return{
-        user:
-      {
-        id:"1",
-        Username : "bosy",
-        Password : "1111",
-        FirstName : "mjjj",
-        LastName : "plp",
-        Email : "$c^",
-        Type : "jj",
-        BirthDate:"2021-05-30"
-      },
-  }
-  },
+   data() {
+    return {
+        password: "",
+        oldPassword:"",
+    }}
+    ,
    computed: {
     ...mapGetters({
       isLoggedIn: "Authorization/GetStatus",
@@ -72,14 +64,13 @@ export default {
      save()
     {
         const newdata = {
-        Username: this.user.Username,
-        Password: this.user.Password,
-        FirstName: this.user.FirstName,
-        LastName: this.user.LastName,
-        Email: this.user.Email,
-        Type: this.user.Type,
-        BirthDate:this.user.BirthDate,
-        NewPassword:this.user.NewPassword
+        userName: this.user.user.userName,
+        oldPassword: this.oldPassword,
+        firstName: this.user.user.firstName,
+        lastName: this.user.user.lastName,
+        // email: this.user.email,
+        brithDay:this.user.user.brithDay,
+        password:this.password
       };
       console.log(newdata);
       this.$store.dispatch("Authorization/edite", newdata);

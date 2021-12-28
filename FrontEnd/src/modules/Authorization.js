@@ -57,20 +57,20 @@ export default {
     get_user({ commit }, flag) {
       const token = localStorage.getItem("access-token");
       console.log(token);
-      axios.defaults.headers.common["x-access-token"] = token;
+      axios.defaults.headers.common["Authorization"] = token;
       commit("auth_request");
       axios
-        .get("https://tendersobserver.herokuapp.com/profile")
+        .get("http://localhost:3000/me")
         .then((response) => {
           console.log(response);
           const user = response.data;
           console.log(user);
           commit("auth_success", { token, user });
-          localStorage.setItem("type", user.UserType);
+          localStorage.setItem("type", user.type);
           console.log(localStorage);
           if (flag) 
           {
-            router.replace("/UserPage/"+user.ID);
+            router.replace("/UserPage/"+user._id);
 
         }
           
@@ -82,15 +82,18 @@ export default {
         });
     },
     signup({commit}, member) {
-      axios.defaults.headers.common["x-access-token"] = localStorage.getItem("access-token");
+      axios.defaults.headers.common["Authorization"] = localStorage.getItem("access-token");
       console.log(localStorage.getItem("access-token"));
       console.log(member);
-      axios.post("https://tendersobserver.herokuapp.com/signup", {
-        Name: member.Name,
-        Password: member.Password,
-        Email: member.Email,
-        Phone: member.Phone,
-        UserType: member.UserType,
+      axios.post("http://localhost:3000/sign-up", {
+        userName: member.Username,
+        password: member.Password,
+        firstName: member.FirstName,
+        lastName: member.LastName,
+        email: member.Email,
+        type: member.Type,
+        brithDay:member.BirthDate,
+        role:member.Type
       })
       .then((response) => {
         console.log(response);
@@ -107,16 +110,16 @@ export default {
       console.log(user);
       commit("auth_request");
       axios
-        .post("https://tendersobserver.herokuapp.com/login", {
-          Password: user.Password,
-          Email: user.Email
+        .post("http://localhost:3000/login", {
+          password: user.Password,
+          identifier: user.Username
         })
         .then((response) => {
           console.log(response);
-          const token = response.data.access_token;
+          const token = response.data.token;
           console.log(token);
           localStorage.setItem("access-token", token);
-          axios.defaults.headers.common["access-token"] = token;
+          axios.defaults.headers.common["Authorization"] = token;
           store.dispatch("Authorization/get_user", true);
         })
         .catch((error) => {
@@ -128,21 +131,26 @@ export default {
     logout({ commit }) {
       commit("logout");
         localStorage.removeItem("access-token");
-        delete axios.defaults.headers.common["access-token"];
+        delete axios.defaults.headers.common["Authorization"];
         console.log(localStorage);
         router.replace("/");
     },
     edite({commit},newdataa)
     {
-      axios.defaults.headers.common["x-access-token"] = localStorage.getItem("access-token");
+      axios.defaults.headers.common["Authorization"] = localStorage.getItem("access-token");
       console.log(localStorage.getItem("access-token"));
       console.log(newdataa);
 
-      if(newdataa.Name!="")
+      if(newdataa.oldPassword!="")
       {
-      axios.put("https://tendersobserver.herokuapp.com/profile", {
-        Name: newdataa.Name,
-        Password: newdataa.Password,
+      axios.put("http://localhost:3000/me",{
+        userName: newdataa.userName,
+        oldPassword: newdataa.oldPassword,
+        firstName: newdataa.firstName,
+        lastName: newdataa.lastName,
+        // email: this.user.email,
+        brithDay:newdataa.brithDay,
+        password:newdataa.password
       })
       .then((response) => {
         console.log(response);
@@ -153,52 +161,6 @@ export default {
         commit("auth","Some Thing wrong , Please try other user Name and all fied check is it not empty");
       }); 
        }
-    if(newdataa.Email!="")
-    { 
-      axios.put("https://tendersobserver.herokuapp.com/profile", {
-        Email: newdataa.Email,
-        Password: newdataa.Password,
-      })
-      .then((response) => {
-        console.log(response);
-        commit("auth","success");
-      })
-      .catch(err=> {
-        console.log(err);
-        commit("auth","Some Thing wrong , Please try other user Name and all fied check is it not empty");
-      }); 
-    } 
-     if(newdataa.Phone!="")
-    {
-      axios.put("https://tendersobserver.herokuapp.com/profile", {
-        Phone: newdataa.Phone,
-        Password: newdataa.Password,
-      })
-      .then((response) => {
-        console.log(response);
-        commit("auth","success");
-      })
-      .catch(err=> {
-        console.log(err);
-        commit("auth","Some Thing wrong , Please try other user Name and all fied check is it not empty");
-      }); 
-
-    } 
-   if(newdataa.NewPassword!="")
-    {  
-      axios.put("https://tendersobserver.herokuapp.com/profile", {
-        NewPassword: newdataa.NewPassword,
-        Password: newdataa.Password,
-      })
-      .then((response) => {
-        console.log(response);
-        commit("auth","success");
-      })
-      .catch(err=> {
-        console.log(err);
-        commit("auth","Some Thing wrong , Please try other user Name and all fied check is it not empty");
-      }); 
-    }
     store.dispatch("Authorization/get_user", false);
      },
      //////////////////Articals////////////////
@@ -231,7 +193,7 @@ export default {
      },
      searchstartend({commit,state},search_bar)
      {
-      axios.defaults.headers.common["x-access-token"] = localStorage.getItem("access-token");
+      axios.defaults.headers.common["Authorization"] = localStorage.getItem("access-token");
       axios
         .get("https://tendersobserver.herokuapp.com/search?apiKey="+state.User.apiKey+"&&year1="+search_bar.year1+"&&month1="+search_bar.month1+"&&day1="+search_bar.day1
         +"&&year2="+search_bar.year2+"&&month2="+search_bar.month2+"&&day2="+search_bar.day2)
