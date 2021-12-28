@@ -40,7 +40,8 @@ export class UserRepository extends BaseRepository<User>  {
 
     async updateUserData(id: any, updateInfo: UpdatDto): Promise<boolean> {
         const user = await this.findByID(id);
-        if (updateInfo.userName && await this.findByUserName(updateInfo.userName)) throw new HttpException('This userName exists', HttpStatus.BAD_REQUEST);
+        if (updateInfo.userName && updateInfo.userName != user.userName)
+            if (updateInfo.userName && await this.findByUserName(updateInfo.userName)) throw new HttpException('This userName exists', HttpStatus.BAD_REQUEST);
         if (updateInfo.password && !updateInfo.oldPassword) throw new HttpException('To update password should enter password', HttpStatus.BAD_REQUEST);
         if (! await bcrypt.compare(updateInfo.oldPassword, user.password)) throw new HttpException('old password is not correct', HttpStatus.FORBIDDEN);
         return await this.update(id, updateInfo)

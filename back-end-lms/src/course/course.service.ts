@@ -32,4 +32,12 @@ export class CourseService {
         return await this.CourseRepository.getAllCourses();
     }
 
+    async getCourseQuestions(courseId) {
+        const course = await this.CourseRepository.getCourse(courseId);
+        var questions = []
+        if (course.questions && course.questions != [])
+            for (let i = 0; i < course.questions.length; i++)
+                questions.push(course.questions[i]);
+        return questions;
+    }
 }

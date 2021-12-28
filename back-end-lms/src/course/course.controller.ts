@@ -1,7 +1,8 @@
-import { Controller, UseGuards, Get, Put, Request, Param, Body, Post } from '@nestjs/common';
+import { Controller, UseGuards, Get, Put, Request, Param, Body, Post, HttpCode, Header, HttpStatus } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
 import { UserService } from '../user/user.service';
 import { CourseService } from './course.service';
+import { createReadStream } from 'fs';
 
 @Controller('course')
 export class CourseController {
@@ -42,9 +43,24 @@ export class CourseController {
     }
 
     @UseGuards(AuthGuard('jwt'))
+    @Get('/courses/:course_id/questions')
+    async getCourseQustions(@Param() Params) {
+        return await this.courseService.getCourseQuestions(Params.course_id);
+    }
+
+    @UseGuards(AuthGuard('jwt'))
     @Get('/courses')
     async getCourses() {
         return await this.courseService.getAllCourses();
+    }
+
+
+    @Get('pdf')
+    @HttpCode(HttpStatus.OK)
+    @Header('Content-Type', 'application/pdf')
+    @Header('Content-Disposition', 'attachment; filename=test.pdf')
+    pdf() {
+        return createReadStream('./nodejs.pdf');
     }
 
 
