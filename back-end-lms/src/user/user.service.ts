@@ -2,6 +2,8 @@ import { Injectable, HttpException, HttpStatus } from '@nestjs/common';
 import { User } from "../models/user.schema";
 import * as bcrypt from 'bcrypt';
 import { UserRepository } from './user-repository.service';
+import { CourseRepository } from '../course/course-repository.service';
+import { CreateDto } from '../course/dto/creation.dto'
 import { RegisterDto } from '../auth/dto/register.dto';
 import { LoginDto } from '../auth/dto/login.dto';
 import { UpdatDto } from './dto/update.dto';
@@ -9,7 +11,8 @@ import { UpdatDto } from './dto/update.dto';
 @Injectable()
 export class UserService {
     constructor(
-        private readonly UserRepository: UserRepository
+        private readonly UserRepository: UserRepository,
+        private readonly CourseRepository: CourseRepository
     ) {
 
     }
@@ -33,19 +36,19 @@ export class UserService {
         return await this.UserRepository.createUser(createUserDto);
     }
 
-     async updateUserRole(adminId: String, userName: String) {
-         await this.UserRepository.changeUSerRole(userName, adminId);
-     }
- 
-     async updateData(userId: String, updateData: UpdatDto) {
-         if (updateData.password) {
-             const salt = await bcrypt.genSalt(10);
-             let hash = await bcrypt.hash(updateData.password, salt);
-             updateData.password = hash;
-         }
-         return await this.UserRepository.updateUserData(userId, updateData);
-     }
-     
+    async updateUserRole(adminId: String, userName: String) {
+        await this.UserRepository.changeUSerRole(userName, adminId);
+    }
+
+    async updateData(userId: String, updateData: UpdatDto) {
+        if (updateData.password) {
+            const salt = await bcrypt.genSalt(10);
+            let hash = await bcrypt.hash(updateData.password, salt);
+            updateData.password = hash;
+        }
+        return await this.UserRepository.updateUserData(userId, updateData);
+    }
+
     async findByLogin(loginDto: LoginDto) {
         const user = await this.UserRepository.findByEmailORUserName(loginDto.identifier);
         if (!user)
@@ -65,6 +68,14 @@ export class UserService {
         if (!user)
             throw new HttpException('Unauthorized access', HttpStatus.UNAUTHORIZED);
         await this.UserRepository.delete(userID);
+    }
+
+    async createCourse(userId, course: { description: string; name: string; }) {
+        await this.UserRepository.checkUserIsInstructor(userId);
+        var courseData: CreateDto = { description: course.description, name: course.name, instructor: userId };
+        const createdcourse = await this.CourseRepository.createCourse(courseData);
+        await this.UserRepository.addCourseToUser(userId, createdcourse._id);
+        return createdcourse;
     }
 
 }

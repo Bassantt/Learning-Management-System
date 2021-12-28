@@ -35,6 +35,12 @@ export abstract class BaseRepository<T> implements IWrite<T>, IRead<T>  {
         return false;
     }
 
+    async updateByData(data: {}, updateInfo: {}) {
+        if (await this._Model.updateOne(data, updateInfo))
+            return true;
+        return false;
+    }
+
     async delete(id) {
         if (await this._Model.findOneAndDelete({ _id: id }))
             return true;

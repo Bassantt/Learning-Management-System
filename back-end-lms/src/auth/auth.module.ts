@@ -4,20 +4,26 @@ import { UserService } from '../user/user.service';
 import { AuthController } from './auth.controller';
 import { TypegooseModule } from "nestjs-typegoose";
 import { User } from "../models/user.schema";
+import { Course } from "../models/course.schema";
 import { JwtStrategy } from './jwt.strategy';
 import { SharedModule } from '../shared/shared.module';
 import { Email } from './send-email.service';
 import { UserRepository } from '../user/user-repository.service';
+import { CourseRepository } from '../course/course-repository.service';
+
 @Module({
-  imports: [SharedModule, SharedModule,
-    TypegooseModule.forFeature([User])
+  imports: [SharedModule,
+    TypegooseModule.forFeature([User]),
+    TypegooseModule.forFeature([Course])
+
   ],
   providers: [
     AuthService,
     JwtStrategy,
     UserService,
     Email,
-    UserRepository
+    UserRepository,
+    CourseRepository
   ],
   controllers: [AuthController]
 })

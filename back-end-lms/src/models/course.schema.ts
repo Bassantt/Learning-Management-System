@@ -7,6 +7,9 @@ export class Course {
     @IsString()
     description: string;
     @prop({ required: true })
+    @IsString()
+    name: string;
+    @prop({ required: true })
     @prop({ ref: User })
     instructor: Ref<User>;
     @ArrayUnique()

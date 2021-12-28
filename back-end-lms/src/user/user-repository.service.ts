@@ -6,6 +6,7 @@ import { InjectModel } from "nestjs-typegoose";
 import { BaseRepository } from "../shared/repository/base.service";
 import * as bcrypt from 'bcrypt';
 import { UpdatDto } from './dto/update.dto';
+import { identity } from "rxjs";
 
 const ObjectId = require('mongoose').Types.ObjectId;
 
@@ -21,14 +22,14 @@ export class UserRepository extends BaseRepository<User>  {
     async findByEmailORUserName(identifier: string) {
         return await this.findOne({ $or: [{ email: identifier }, { userName: identifier }] });
     }
-        async findByUserName(userName: string) {
-            return await this.findOne({ userName: userName });
-        }
-   
+    async findByUserName(userName: string) {
+        return await this.findOne({ userName: userName });
+    }
+
     async createUser(userData: RegisterDto) {
         return await this.create(userData);
     }
-    
+
     async changeUSerRole(userName, adminId) {
         const admin = await this.findByID(adminId);
         if (!admin && admin.type != "admin") throw new HttpException('this task can be done only be admins', HttpStatus.UNAUTHORIZED);
@@ -45,6 +46,15 @@ export class UserRepository extends BaseRepository<User>  {
         return await this.update(id, updateInfo)
     }
 
+    async addCourseToUser(userId, courseId) {
+        if (!await this.updateByData({ id: userId, role: "Instructor" }, { $push: { courses: courseId } }))
+            throw new HttpException('You should be instructor', HttpStatus.FORBIDDEN);
+    }
 
+    async checkUserIsInstructor(userId) {
+        const users = await this.find({ id: userId, role: "Instructor" });
+        if (!users || users == [] || users.length == 0)
+            throw new HttpException('You should be instructor', HttpStatus.FORBIDDEN);
+    }
 
 }
