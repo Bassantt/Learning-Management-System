@@ -13,8 +13,7 @@
               :name="Course.name"
               :CourseId="Course._id"
               :description="Course.description"
-              :infoins="Course.infoins"
-              :ins="Course.ins"
+              :ins="Course.instructor"
             />
           </div>
         </div>
@@ -77,48 +76,20 @@ h2 {
 <script>
 import CourseCard from "@/components/CourseCard.vue";
 import HomeNavigation from "@/components/HomeNavigationBar.vue";
-// import { mapGetters } from "vuex";
+import { mapGetters } from "vuex";
 export default {
   name: "Courses",
   components: {
     CourseCard,
     HomeNavigation
   },
-  data(){
-      return{
-    courses:[
-      {
-        _id : "1111",
-        name : "bosy",
-        description : "mjjj",
-        infoins : "plp",
-        ins : "$c^",
-      },
-          {
-        _id : "1111",
-        name : "bosy",
-        description : "mjjj",
-        infoins : "plp",
-        ins : "$c^",
-      },
-          {
-        _id : "1111",
-        name : "bosy",
-        description : "mjjj",
-        infoins : "plp",
-        ins : "$c^",
-      },
-       
-       ]
-  }
-  },
   mounted() {
-    // this.$store.dispatch("Courses/showCourses");
+    this.$store.dispatch("Course/showCourses");
   },
-//   computed: {
-//     ...mapGetters({
-//       Courses: "Courses/getCourses",
-//     })
-//   }
+  computed: {
+    ...mapGetters({
+      Courses: "Course/getCourses",
+    })
+  }
 };
 </script>

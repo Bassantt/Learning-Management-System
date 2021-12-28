@@ -65,9 +65,6 @@ export default {
     CourseId: {
       type: String
     },
-    infoins: {
-      type: String
-    },
     ins: {
       type: String
     }

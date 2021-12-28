@@ -18,7 +18,7 @@
           <a>Login</a>
         </router-link>
         <router-link 
-          :to="{ path: '/UserPage/' + user.ID }"
+          :to="{ path: '/UserPage/' + user.user._id }"
           tag="li"
           v-if="isLoggedIn =='success' " >
         <a>{{user.Email}}</a>
@@ -26,8 +26,11 @@
         <router-link to="/Register" tag="li" v-if="isLoggedIn !='success' " >
         <a>Register</a>
         </router-link>
-        <router-link :to="{ path: '/Admin/' + user.ID }" tag="li" v-if="isLoggedIn =='success' && user.UserType=='Admin'" >
+        <router-link :to="{ path: '/Admin/' + user.user._id }" tag="li" v-if="isLoggedIn =='success' && user.user.type=='Admin'" >
         <a>Admin's Control</a>
+        </router-link>
+        <router-link :to="{ path: '/Courses/' + user.user._id }" tag="li" v-if="isLoggedIn =='success' && (user.user.type=='Admin' || user.user.type=='Customer')" >
+        <a>See Courses </a>
         </router-link>
         <Button class="btn float-right logout_btn" @click="logout()" v-if="isLoggedIn=='success'">Log out </Button>
 
