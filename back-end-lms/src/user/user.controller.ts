@@ -18,7 +18,7 @@ export class UserController {
         user.password = undefined;
         return { user };
     }
-    
+
     @UseGuards(AuthGuard('jwt'))
     @Put('/user/:userName')
     async changeUserRole(@Request() req, @Param() params) {
@@ -30,11 +30,26 @@ export class UserController {
     async updateMyData(@Request() req, @Body() updateData: UpdatDto) {
         await this.userService.updateData(req.user._id, updateData)
     }
-    
+
+    @UseGuards(AuthGuard('jwt'))
+    @Get('/user/:user_id/courses')
+    async getUserCourses(@Param() Param) {
+        const courses = await this.userService.getInstractorCourses(Param.user_id);
+        return { courses };
+    }
+
+    @UseGuards(AuthGuard('jwt'))
+    @Get('/me/courses')
+    async getMyCourses(@Request() req) {
+        const courses = await this.userService.getInstractorCourses(req.user._id);
+        return { courses };
+    }
+
 
     @Get('/users')
     async all(): Promise<User[] | null> {
         return await this.userService.findAllUsers();
     }
+
 
 }
