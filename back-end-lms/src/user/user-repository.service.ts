@@ -57,4 +57,11 @@ export class UserRepository extends BaseRepository<User>  {
             throw new HttpException('You should be instructor', HttpStatus.FORBIDDEN);
     }
 
+    async getUserById(userId) {
+        const user = await this.findByID(userId);
+        if (!user)
+            throw new HttpException('Not user', HttpStatus.BAD_REQUEST);
+        return user;
+    }
+
 }

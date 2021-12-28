@@ -10,9 +10,36 @@ export class CourseController {
         private courseService: CourseService
 
     ) { }
+
     @UseGuards(AuthGuard('jwt'))
     @Post('/me/courses')
     async createCourse(@Request() req, @Body() courseData: { description: string; name: string; }) {
         return await this.userService.createCourse(req.user._id, courseData);
     }
+
+    @UseGuards(AuthGuard('jwt'))
+    @Put('/me/courses/:course_id')
+    async updateCourse(@Request() req, @Param() Params, @Body() courseData: { description: string; name: string; }) {
+        return await this.courseService.updateCourse(req.user._id, Params.course_id, courseData);
+    }
+
+    @UseGuards(AuthGuard('jwt'))
+    @Put('/me/courses/:course_id/video')
+    async addVideo(@Request() req, @Param() Params, @Body() videoData: { title: String, link: String }) {
+        return await this.courseService.addVedioToCourse(req.user._id, Params.course_id, videoData);
+    }
+    /*
+        @UseGuards(AuthGuard('jwt'))
+        @Post('/courses/:course_id')
+        async addQuestion(@Param() Params, @Body() body: { question: string }) {
+            return await this.courseService.addQuestionToCourse(Params.course_id, body.question);
+        }
+    */
+    @UseGuards(AuthGuard('jwt'))
+    @Get('/courses/:course_id')
+    async getCourse(@Param() Params) {
+        return await this.courseService.getCourse(Params.course_id);
+    }
+
+
 }

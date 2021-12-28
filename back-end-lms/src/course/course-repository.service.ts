@@ -20,6 +20,24 @@ export class CourseRepository extends BaseRepository<Course>  {
         return await this.create(course);
     }
 
+    async updateCourse(instructorId, courseId, updatedData: {}) {
+        if (!await this.updateByData({ _id: courseId, instructor: instructorId }, updatedData))
+            throw new HttpException('You do not the instructor of this course', HttpStatus.FORBIDDEN);
+    }
+
+    async addQuestionToSchema(courseId, QuestionId) {
+        if (!await this.update(courseId, { $push: { questions: QuestionId } }))
+            throw new HttpException('this is not a course', HttpStatus.BAD_REQUEST);
+    }
+
+    async getCourse(courseId) {
+        const course = await this.findByID(courseId);
+        if (!course)
+            throw new HttpException('this is not a course', HttpStatus.BAD_REQUEST);
+        return course;
+    }
+
+
 
 
 
