@@ -2,6 +2,7 @@ import {
     Controller,
     UseGuards,
     Get,
+    Res,
     Put,
     Request,
     Param,
@@ -13,12 +14,15 @@ import {
     UseInterceptors,
     UploadedFile
 } from '@nestjs/common';
+import { join } from 'path';
+import { Response } from 'express';
 import { AuthGuard } from '@nestjs/passport';
 import { UserService } from '../user/user.service';
-import { CourseService } from './course.service';
+import { CourseService, editFileName } from './course.service';
 import { createReadStream } from 'fs';
-import { post } from '@typegoose/typegoose';
 import { FileInterceptor } from '@nestjs/platform-express';
+import { diskStorage } from 'multer';
+
 
 @Controller('')
 export class CourseController {
@@ -70,20 +74,26 @@ export class CourseController {
         return await this.courseService.getAllCourses();
     }
 
-
-    @Get('pdf')
-    @HttpCode(HttpStatus.OK)
-    @Header('Content-Type', 'application/pdf')
-    @Header('Content-Disposition', 'attachment; filename=test.pdf')
-    pdf() {
-        return createReadStream('./nodejs.pdf');
+    @UseGuards(AuthGuard('jwt'))
+    @Post('/me/courses/:course_id/pdf')
+    @UseInterceptors(FileInterceptor("file", {
+        storage: diskStorage({
+            destination: './uploads',
+            filename: editFileName,
+        }),
+    }))
+    async uploadpdf(@UploadedFile() file, @Param() Params, @Request() req) {
+        await this.courseService.addPdfToCourse(req.user._id, Params.course_id, file);
     }
 
-    @Post('file')
-    @UseInterceptors(FileInterceptor("photo", { dest: './uploads', }))
-    uploadSingle(@UploadedFile() file) {
-        console.log(file);
+    @UseGuards(AuthGuard('jwt'))
+    @Get('/courses/file/:link')
+    getFile(@Res() res: Response, @Param() params) {
+        const file = createReadStream(join(process.cwd(), './uploads/' + params.link));
+        file.pipe(res);
     }
+
+
 
 
 }

@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, HttpException, HttpStatus } from '@nestjs/common';
 import { CourseRepository } from './course-repository.service';
 import { UserRepository } from '../user/user-repository.service';
 import { QuestionRepository } from '../Question/question-repository.service';
@@ -11,6 +11,11 @@ export class CourseService {
 
     async updateCourse(userId, courseId, updatedData) {
         await this.CourseRepository.updateCourse(userId, courseId, updatedData);
+    }
+
+    async addPdfToCourse(userId, courseId, file) {
+        console.log(file)
+        await this.CourseRepository.updateCourse(userId, courseId, { $push: { activitiesAsPDF: { link: file.filename, title: file.originalname } } });
     }
 
     async addVedioToCourse(userId, courseId, vedioBody: { title: String, link: String }) {
@@ -40,4 +45,30 @@ export class CourseService {
                 questions.push(course.questions[i]);
         return questions;
     }
+
+    async
+
 }
+
+
+export const editFileName = (res, file, callback) => {
+    if (file == undefined) throw new HttpException('Enter file param', HttpStatus.BAD_REQUEST);
+    if (file.originalname.split('.').length > 1) {
+        const name = file.originalname.split('.')[0];
+        const fileExtName = '.' + file.originalname.split('.')[1];
+        const randomName = Array(4)
+            .fill(null)
+            .map(() => Math.round(Math.random() * 16).toString(16))
+            .join('');
+        callback(null, `${name}-${randomName}${fileExtName}`);
+    }
+    else {
+        const name = file.originalname;
+        const randomName = Array(4)
+            .fill(null)
+            .map(() => Math.round(Math.random() * 16).toString(16))
+            .join('');
+        callback(null, `${name}-${randomName}`);
+    }
+
+};

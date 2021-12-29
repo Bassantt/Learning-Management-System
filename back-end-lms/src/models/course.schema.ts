@@ -22,5 +22,8 @@ export class Course {
     @prop({ required: false, default: [] })
     @prop({ ref: Question })
     questions?: [Ref<Question>];
+    @ArrayUnique()
+    @prop({ required: false, default: [] })
+    syllabus?: [{ week_number: Number, title: String }];
 
 }

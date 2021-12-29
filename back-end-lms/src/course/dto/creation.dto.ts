@@ -7,5 +7,6 @@ export class CreateDto {
   name: string;
   @IsString()
   instructor: any;
+  syllabus?: [{ week_number: Number, title: String }]
 }
 

@@ -48,12 +48,14 @@ export class UserRepository extends BaseRepository<User>  {
     }
 
     async addCourseToUser(userId, courseId) {
-        if (!await this.updateByData({ id: userId, role: "Instructor" }, { $push: { courses: courseId } }))
+        console.log(courseId)
+        if (!await this.updateByData({ _id: userId, role: "Instructor" }, { $push: { courses: courseId } }))
             throw new HttpException('You should be instructor', HttpStatus.FORBIDDEN);
     }
 
     async checkUserIsInstructor(userId) {
-        const users = await this.find({ id: userId, role: "Instructor" });
+        const users = await this.find({ _id: userId, role: "Instructor" });
+        console.log(users[0].courses)
         if (!users || users == [] || users.length == 0)
             throw new HttpException('You should be instructor', HttpStatus.FORBIDDEN);
     }

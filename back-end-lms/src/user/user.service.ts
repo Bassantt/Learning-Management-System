@@ -85,7 +85,7 @@ export class UserService {
         console.log(courses);
         if ((courses.courses) && (courses.courses != []))
             for (let i = 0; i < courses.courses.length; i++)
-                coursesWithData.push(await this.CourseRepository.getCourse(courses.courses[i]));
+                coursesWithData.push(await this.CourseRepository.getCourse(courses.courses[i][0]));
         return coursesWithData;
 
     }
