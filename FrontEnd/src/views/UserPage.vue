@@ -3,9 +3,8 @@
     <HomeNavigation />
   <div class=" row justify-content-center home px-0 m-0">
      <div class="col-sm-70%" id="edit_div" >
-        <h2>My Profile</h2>{{user}}
+        <h2>My Profile</h2>
         <p>Your Type is : {{user.user.type}}</p>
-        {{user.user.userName}}
         <ul>
           <li>
             Username :<input id="username"  v-model="user.user.userName" type="text" class="form-control" >

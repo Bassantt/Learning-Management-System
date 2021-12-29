@@ -9,10 +9,10 @@
         class="col-lg-100% col-md-60% col-xs-6"
         v-for="user in users"
         :key="user.ID"
-        :Id="user.ID"
-        :Name="user.Name"
-        :Email="user.Email"
-        :Phone="user.Phone"
+        :Id="user._d"
+        :userName="user.userName"
+        :email="user.email"
+        :type="user.type"
       />
     </div>
     <p v-if="getloading==true">this will take some time</p>
@@ -44,7 +44,6 @@ export default {
   computed: {
     ...mapGetters({
       users: "Authorization/users",
-      getloading:"Authorization/getloading",
     }),
   },
   methods:

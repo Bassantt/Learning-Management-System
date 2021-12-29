@@ -4,17 +4,15 @@
       <td><img src="../assets/unnamed.png" /></td>
       <td></td>
       <td>
-        <h3>Name: {{ Name }}</h3>
+        <h3>userName: {{ userName }}</h3>
       </td>
       <td>
-        <h3>Email: {{ Email }}</h3>
+        <h3>email: {{ email }}</h3>
       </td>
       <td>
-        <h3>Phone: {{ Phone }}</h3>
+        <h3>type: {{ type }}</h3>
       </td>
-      <td></td>
-      <td></td>
-      <td><button @click="Deleteuser" class="Delete">X</button></td>
+      <td><button @click="changerole" class="Delete"> make as instractor</button></td>
     </tr>
   </div>
 </template>
@@ -26,22 +24,22 @@ export default {
     Id: {
       type: String,
     },
-    Name: {
+    userName: {
       type: String,
     },
-    Email: {
+    email: {
       type: String,
     },
-    Phone: {
+    type: {
       type: String,
     },
   },
   methods: {
-    Deleteuser() {
-      console.log("I will delete");
+    changerole() {
+      console.log("I will changerole");
       console.log(this.Id);
       //will put dispatch here and send the ship id
-      this.$store.dispatch("Authorization/deleteuser", this.Id);
+      this.$store.dispatch("Authorization/changerole", this.Id);
     },
   },
 };
@@ -56,12 +54,12 @@ export default {
   background-color: rgb(96, 155, 189);
   margin-bottom: 20px;
   border: solid black;
-  width: 80%;
-  margin-left: 10%;
+  width: 90%;
+  margin-left: 2%;
   border-radius: 70px;
 }
 .Delete {
-  background: #af0909;
+  background: green;
   color: #fff;
   border: none;
   padding: 5px 9px;

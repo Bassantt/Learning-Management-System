@@ -10,9 +10,7 @@ export default {
     User: {},
     msg:"",
     users:[],
-    api:"Api-Key",
-    loading:false,
-    articals:{}
+    loading:false
   },
   mutations: {
     auth(state,res) {
@@ -34,7 +32,6 @@ export default {
       state.status = "";
       state.token = "";
       state.User = {};
-      state.api="Api-Key";
     },
     setusers(state,res)
     {
@@ -163,58 +160,15 @@ export default {
        }
     store.dispatch("Authorization/get_user", false);
      },
-     //////////////////Articals////////////////
-     showarticals({commit})
-     {
-      axios
-        .get("https://tendersobserver.herokuapp.com/show_all")
-        .then((respons) => {
-          console.log(respons);
-          commit("setarticals",respons.data.Articles)
-        })
-        .catch((error) => {
-          console.log(error);
-        });
-     },
-     
-     searchstart({commit,state},search_bar)
-     {
-      axios.defaults.headers.common["x-access-token"] = localStorage.getItem("access-token");
-      axios
-        .get("https://tendersobserver.herokuapp.com/search?apiKey="+state.User.apiKey+"&&year1="+search_bar.year1+"&&month1="+search_bar.month1+"&&day1="+search_bar.day1)
-        .then((respons) => {
-          console.log(respons);
-          commit("setarticals",respons.data.Articles)
-          alert("Search Done ^_^");
-        })
-        .catch((error) => {
-          console.log(error);
-        });
-     },
-     searchstartend({commit,state},search_bar)
-     {
-      axios.defaults.headers.common["Authorization"] = localStorage.getItem("access-token");
-      axios
-        .get("https://tendersobserver.herokuapp.com/search?apiKey="+state.User.apiKey+"&&year1="+search_bar.year1+"&&month1="+search_bar.month1+"&&day1="+search_bar.day1
-        +"&&year2="+search_bar.year2+"&&month2="+search_bar.month2+"&&day2="+search_bar.day2)
-        .then((respons) => {
-          console.log(respons);
-          commit("setarticals",respons.data.Articles)
-          alert("Search Done  ^_^");
-        })
-        .catch((error) => {
-          console.log(error);
-        });
-     },
      ///////////////////////////////////////admin functions//////////////////////////////////////////////////////////////////////////////////
      showusers({commit})
      {
       axios.defaults.headers.common["x-access-token"] = localStorage.getItem("access-token");
       axios
-        .get("https://tendersobserver.herokuapp.com/admin")
+        .get("http://localhost:3000/users")
         .then((respons) => {
           console.log(respons);
-          let result = respons.data.users;
+          let result = respons.data;
           console.log(result);
           console.log(result[0]);
           commit("setusers", result);
@@ -224,7 +178,7 @@ export default {
         });
 
      },
-     deleteuser({commit},userid)
+     changerole({commit},userid)
      {
       axios.defaults.headers.common["x-access-token"] = localStorage.getItem("access-token");
       console.log("on delete request");
