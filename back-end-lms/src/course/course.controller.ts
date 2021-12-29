@@ -34,7 +34,7 @@ export class CourseController {
 
     @UseGuards(AuthGuard('jwt'))
     @Post('/me/courses')
-    async createCourse(@Request() req, @Body() courseData: { description: string; name: string; }) {
+    async createCourse(@Request() req, @Body() courseData: { description: string; name: string; syllabus?: [{ week_number: Number, title: String }]; }) {
         return await this.userService.createCourse(req.user._id, courseData);
     }
 
