@@ -4,7 +4,7 @@ import { CourseService } from '../course/course.service';
 import { QuestionService } from './question.service';
 
 
-@Controller('question')
+@Controller('')
 export class QuestionController {
     constructor(
         private questionService: QuestionService

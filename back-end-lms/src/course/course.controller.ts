@@ -1,10 +1,26 @@
-import { Controller, UseGuards, Get, Put, Request, Param, Body, Post, HttpCode, Header, HttpStatus } from '@nestjs/common';
+import {
+    Controller,
+    UseGuards,
+    Get,
+    Put,
+    Request,
+    Param,
+    Body,
+    Post,
+    HttpCode,
+    Header,
+    HttpStatus,
+    UseInterceptors,
+    UploadedFile
+} from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
 import { UserService } from '../user/user.service';
 import { CourseService } from './course.service';
 import { createReadStream } from 'fs';
+import { post } from '@typegoose/typegoose';
+import { FileInterceptor } from '@nestjs/platform-express';
 
-@Controller('course')
+@Controller('')
 export class CourseController {
     constructor(
         private userService: UserService,
@@ -61,6 +77,12 @@ export class CourseController {
     @Header('Content-Disposition', 'attachment; filename=test.pdf')
     pdf() {
         return createReadStream('./nodejs.pdf');
+    }
+
+    @Post('file')
+    @UseInterceptors(FileInterceptor("photo", { dest: './uploads', }))
+    uploadSingle(@UploadedFile() file) {
+        console.log(file);
     }
 
 

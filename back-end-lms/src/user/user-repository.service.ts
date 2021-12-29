@@ -65,5 +65,9 @@ export class UserRepository extends BaseRepository<User>  {
         return user;
     }
 
+    async getUsersLearner() {
+        return await this.find({ role: "Learner" })
+    }
+
 
 }
