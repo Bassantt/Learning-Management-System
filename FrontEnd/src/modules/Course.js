@@ -17,7 +17,7 @@ export default {
         console.log(token);
         axios.defaults.headers.common["Authorization"] = token;
       axios
-        .get("http://localhost:3000/me/courses")
+        .get("http://localhost:3000/courses")
         .then(respons => {
           let resCourses = respons.data;
           console.log(resCourses)

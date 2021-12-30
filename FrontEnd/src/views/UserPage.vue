@@ -67,7 +67,6 @@ export default {
         oldPassword: this.oldPassword,
         firstName: this.user.user.firstName,
         lastName: this.user.user.lastName,
-        // email: this.user.email,
         brithDay:this.user.user.brithDay,
         password:this.password
       };

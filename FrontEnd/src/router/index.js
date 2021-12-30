@@ -7,6 +7,7 @@ import Register from "../views/Register.vue";
 import UserPage from "../views/UserPage.vue";
 import Admin from "../views/Admin.vue";
 import Courses from "../views/Courses.vue"
+import CoursePage from "../views/CoursePage.vue"
 import Element from 'element-ui'
 
 Vue.use(Element)
@@ -30,12 +31,12 @@ const routes = [
     component: Register,
   },
   {
-    path: "/UserPage/:UserID",
+    path: "/UserPage/:ID",
     name: "UserPage",
     component: UserPage,
   },
   {
-    path: "/Admin/:AdminID",
+    path: "/Admin/:ID",
     name: "Admin",
     component: Admin,
   },
@@ -43,6 +44,11 @@ const routes = [
     path: "/Courses/:ID",
     name: "Courses",
     component: Courses,
+  },
+  {
+    path: "/CoursePage/:ID",
+    name: "CoursePage",
+    component: CoursePage,
   }
   
 ];

@@ -62,12 +62,13 @@ export default {
           console.log(response);
           const user = response.data;
           console.log(user);
+
           commit("auth_success", { token, user });
           localStorage.setItem("type", user.type);
           console.log(localStorage);
           if (flag) 
           {
-            router.replace("/UserPage/"+user._id);
+            router.replace("/UserPage/"+user.user._id);
 
         }
           
@@ -138,7 +139,7 @@ export default {
       console.log(localStorage.getItem("access-token"));
       console.log(newdataa);
 
-      if(newdataa.oldPassword!="")
+      if(newdataa.oldPassword!="" && newdataa.password!="")
       {
       axios.put("http://localhost:3000/me",{
         userName: newdataa.userName,
@@ -157,6 +158,26 @@ export default {
         console.log(err);
         commit("auth","Some Thing wrong , Please try other user Name and all fied check is it not empty");
       }); 
+       }
+       ////not change in password
+       else
+       {
+        axios.put("http://localhost:3000/me",{
+          userName: newdataa.userName,
+          oldPassword: newdataa.oldPassword,
+          firstName: newdataa.firstName,
+          lastName: newdataa.lastName,
+          // email: this.user.email,
+          brithDay:newdataa.brithDay
+        })
+        .then((response) => {
+          console.log(response);
+          commit("auth","success");
+        })
+        .catch(err=> {
+          console.log(err);
+          commit("auth","Some Thing wrong , Please try other user Name and all fied check is it not empty");
+        }); 
        }
     store.dispatch("Authorization/get_user", false);
      },
