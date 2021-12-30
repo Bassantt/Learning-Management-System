@@ -2,31 +2,35 @@
   <div class="cont">
     <HomeNavigation />
     <div class="container">
+      <h1>course name</h1>
+      <h2>
+        instructure information 
+      </h2>
+    </div>
+  <div class="con">
+    <div>
+      <button class="tablink" @click="syllabus()" id="defaultOpen">syllabus</button>
+      <button class="tablink" @click="Pdfmaterial()">Pdfmaterial</button>
+      <button class="tablink" @click="Videos()">Videos</button>
+      <button class="tablink" @click="QA()">QA</button>
+    </div>
 	<div class="d-flex justify-content-center h-100">
-		
-    <button class="tablink" @click="syllabus()" id="defaultOpen">syllabus</button>
-    <button class="tablink" @click="Pdfmaterial()">Pdfmaterial</button>
-    <button class="tablink" @click="Videos()">Videos</button>
-    <button class="tablink" @click="QA()">QA</button>
-    
-    <br/>
-    
-    <div id="Home" class="tabcontent" v-if="showsyllabus">
+    <div  class="tabcontent" v-if="showsyllabus">
     <h3>Home</h3>
     <p>Home is where the heart is..</p>
     </div>
 
-    <div id="News" class="tabcontent" v-if="showPdfmaterial">
+    <div  class="tabcontent" v-if="showPdfmaterial">
     <h3>News</h3>
     <p>Some news this fine day!</p> 
     </div>
 
-    <div id="Contact" class="tabcontent" v-if="showVideos">
+    <div  class="tabcontent" v-if="showVideos">
     <h3>Contact</h3>
     <p>Get in touch, or swing by for a cup of coffee.</p>
     </div>
 
-    <div id="About" class="tabcontent" v-if="showQA">
+    <div  class="tabcontent" v-if="showQA">
     <h3>About</h3>
     <p>Who we are and what we do.</p>
     </div>
@@ -100,20 +104,9 @@ height: calc(100vh);
 align-content: center;
 }
 
-* {box-sizing: border-box}
-
-/* Set height of body and the document to 100% */
-body, html {
-  height: 100%;
-  margin: 0;
-  font-family: Arial;
-}
-
-/* Style tab links */
 .tablink {
   background-color: #555;
   color: white;
-  float: left;
   border: none;
   outline: none;
   cursor: pointer;
@@ -126,15 +119,23 @@ body, html {
   background-color: #777;
 }
 
-/* Style the tab content (and add height:100% for full page content) */
+
 .tabcontent {
   color: black;
   padding: 100px 20px;
-  height: 100%;
+  height: auto;
+  width: 100%;
+  background-color:rgba(119, 119, 119, 0.103);
+}
+.con
+{
+  width: 100%;
+  height: calc(85vh);
+}
+.container
+{ 
+  color: rgb(37, 91, 122);
+  font-size: 20px;
 }
 
-#Home {background-color: red;}
-#News {background-color: green;}
-#Contact {background-color: blue;}
-#About {background-color: orange;}
 </style>

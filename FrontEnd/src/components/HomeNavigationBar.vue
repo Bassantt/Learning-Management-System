@@ -10,8 +10,16 @@
         </ul>
       </router-link>
       <ul id="secul">
-        <router-link to="/" tag="li">
+        <router-link to="/" tag="li"  v-if="isLoggedIn !='success'">
           <a>Home</a>
+        </router-link>
+
+        <router-link :to="{ path: '/Courses/'+ user.user._id }"  tag="li"  v-if="isLoggedIn =='success' && (user.user.type=='Admin'||user.user.role=='learner') ">
+          <a>Courses</a>
+        </router-link>
+
+        <router-link :to="{ path: '/AddCourse/'+ user.user._id }"  tag="li"  v-if="isLoggedIn =='success' && (user.user.type=='Admin'||user.user.role=='instructor') ">
+          <a>AddCourse</a>
         </router-link>
 
         <router-link to="/Login" tag="li" v-if="isLoggedIn !='success'">
@@ -28,9 +36,6 @@
         </router-link>
         <router-link :to="{ path: '/Admin/' + user.user._id }" tag="li" v-if="isLoggedIn =='success' && user.user.type=='Admin'" >
         <a>Admin's Control</a>
-        </router-link>
-        <router-link :to="{ path: '/Courses/' + user.user._id }" tag="li" v-if="isLoggedIn =='success' && (user.user.type=='Admin' || user.user.type=='Customer')" >
-        <a>See Courses </a>
         </router-link>
         <Button class="btn float-right logout_btn" @click="logout()" v-if="isLoggedIn=='success'">Log out </Button>
 

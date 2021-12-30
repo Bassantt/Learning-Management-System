@@ -100,6 +100,7 @@ export default {
       })
       .catch(err=> {
         console.log(err);
+        alert("Some Thing wrong , Please try other user Name and all fied check is it not empty");
         commit("auth","Some Thing wrong , Please try other user Name and all fied check is it not empty");
       });
   },
@@ -122,6 +123,7 @@ export default {
         })
         .catch((error) => {
           console.log(error);
+          alert("Some Thing wrong ,check is it not empty and your userName and password");
           commit("auth_error", "not user by this email");
           localStorage.removeItem("access-token");
         });
@@ -139,32 +141,33 @@ export default {
       console.log(localStorage.getItem("access-token"));
       console.log(newdataa);
 
-      if(newdataa.oldPassword!="" && newdataa.password!="")
+      if(newdataa.oldPassword!="")
       {
-      axios.put("http://localhost:3000/me",{
-        userName: newdataa.userName,
-        oldPassword: newdataa.oldPassword,
-        firstName: newdataa.firstName,
-        lastName: newdataa.lastName,
-        // email: this.user.email,
-        brithDay:newdataa.brithDay,
-        password:newdataa.password
-      })
-      .then((response) => {
-        console.log(response);
-        commit("auth","success");
-      })
-      .catch(err=> {
-        console.log(err);
-        commit("auth","Some Thing wrong , Please try other user Name and all fied check is it not empty");
-      }); 
+        if(newdataa.password!="")
+        {
+        axios.put("http://localhost:3000/me",{
+          userName: newdataa.userName,
+          oldPassword: newdataa.oldPassword,
+          firstName: newdataa.firstName,
+          lastName: newdataa.lastName,
+          // email: this.user.email,
+          brithDay:newdataa.brithDay,
+          password:newdataa.password
+        })
+        .then((response) => {
+          console.log(response);
+          commit("auth","success");
+        })
+        .catch(err=> {
+          console.log(err);
+          commit("auth","Some Thing wrong , Please try other user Name and all fied check is it not empty");
+        }); 
        }
        ////not change in password
        else
        {
         axios.put("http://localhost:3000/me",{
           userName: newdataa.userName,
-          oldPassword: newdataa.oldPassword,
           firstName: newdataa.firstName,
           lastName: newdataa.lastName,
           // email: this.user.email,
@@ -178,8 +181,14 @@ export default {
           console.log(err);
           commit("auth","Some Thing wrong , Please try other user Name and all fied check is it not empty");
         }); 
+      }
+          
+       store.dispatch("Authorization/get_user", false);
        }
-    store.dispatch("Authorization/get_user", false);
+       else
+       {
+         alert("you should enter your password");
+       }
      },
      ///////////////////////////////////////admin functions//////////////////////////////////////////////////////////////////////////////////
      showusers({commit})
@@ -310,11 +319,11 @@ export default {
      
   },
   getters: {
-    Username: (state) => state.User.Name,
+    Username: (state) => state.User.user.userName,
     GetStatus: (state) => state.status,
     user: (state) => state.User,
-    userid: (state) => state.User.ID,
-    usertype: (state) => state.User.UserType,
+    userid: (state) => state.User.user._id,
+    usertype: (state) => state.User.user.type,
     msg:(state) => state.msg,
     users: (state) => state.users,
     api: (state) => state.api,
