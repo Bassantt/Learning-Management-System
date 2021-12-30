@@ -6,7 +6,7 @@
       <h4 class="card-title" id="categoryname">{{ name }}</h4>
       <div @click="setcategoryname">
         <router-link
-          :to="{ path: '/Course/' + CourseId }"
+          :to="{ path: '/CoursePage/' + CourseId }"
           class="stretched-link"
           id="carglink"
           testid="cardlink"

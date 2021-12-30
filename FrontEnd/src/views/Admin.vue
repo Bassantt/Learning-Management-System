@@ -6,19 +6,15 @@
     <div class="row" id="margn" v-if="show==true">
       <h1>Users</h1>
       <UserCard
-        class="col-lg-100% col-md-60% col-xs-6"
+        class="col-lg-50% col-md-30% col-xs-6"
         v-for="user in users"
-        :key="user.ID"
-        :Id="user._d"
+        :key="user._id"
+        :Id="user._id"
         :userName="user.userName"
         :email="user.email"
         :type="user.type"
       />
     </div>
-    <p v-if="getloading==true">this will take some time</p>
-    <div class="spinner-grow text-primary pos" role="status" v-if="getloading==true">
-    </div> 
-     <span class="sr-only load" v-if="getloading==true">Loading...</span>
   </div>
 </template>
 
@@ -56,14 +52,6 @@ export default {
     hide()
     {
      this.show=false;
-    },
-    UpdateArticals()
-    {
-      this.$store.dispatch("Authorization/UpdateArticals");
-    },
-    ClearArticals()
-    {
-      this.$store.dispatch("Authorization/ClearArticals");
     }
   }
 };

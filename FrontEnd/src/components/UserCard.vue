@@ -1,18 +1,16 @@
 <template>
   <div class="Ship-item" id="con">
     <tr>
-      <td><img src="../assets/unnamed.png" /></td>
-      <td></td>
+      <td><img src="../assets/shutterstock_1131981236-768x432.png" /></td>
       <td>
         <h3>userName: {{ userName }}</h3>
-      </td>
-      <td>
+        <br/>
         <h3>email: {{ email }}</h3>
-      </td>
-      <td>
+        <br/>
         <h3>type: {{ type }}</h3>
+        <br/>
+      <button @click="changerole" class="change"> make as instractor</button>
       </td>
-      <td><button @click="changerole" class="Delete"> make as instractor</button></td>
     </tr>
   </div>
 </template>
@@ -39,7 +37,7 @@ export default {
       console.log("I will changerole");
       console.log(this.Id);
       //will put dispatch here and send the ship id
-      this.$store.dispatch("Authorization/changerole", this.Id);
+      this.$store.dispatch("Authorization/changerole", {_id:this.Id,userName:this.userName});
     },
   },
 };
@@ -48,21 +46,21 @@ export default {
 <style scoped>
 #con {
   background: rgb(37, 91, 122);
-  padding: 10px;
+  padding: 2px;
   word-spacing: 5px;
   border-spacing: 20px;
   background-color: rgb(96, 155, 189);
   margin-bottom: 20px;
   border: solid black;
-  width: 90%;
+  width: auto;
   margin-left: 2%;
   border-radius: 70px;
 }
-.Delete {
+.change {
   background: green;
   color: #fff;
   border: none;
-  padding: 5px 9px;
+  padding: 10px 10px;
   border-radius: 50%;
   cursor: pointer;
   float: right;

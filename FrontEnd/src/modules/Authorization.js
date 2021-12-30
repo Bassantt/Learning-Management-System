@@ -208,13 +208,12 @@ export default {
         });
 
      },
-     changerole({commit},userid)
+     changerole({commit},ob)
      {
       axios.defaults.headers.common["x-access-token"] = localStorage.getItem("access-token");
-      console.log("on delete request");
-      console.log(userid);
-      axios
-        .delete("https://tendersobserver.herokuapp.com/admin" ,{data: {ID : userid}})
+      console.log("on changerole request");
+      console.log(ob.userName);
+      axios.put("http://localhost:3000/user?userName="+ob.userName )
         .then((respons) => {
           commit("delete",true)
           console.log(respons.data.message);
@@ -224,98 +223,7 @@ export default {
           commit("delete",false)
           console.log(error);
         });
-     },
-     UpdateArticals({commit})
-     {
-      commit("setloading",true)
-      axios.defaults.headers.common["x-access-token"] = localStorage.getItem("access-token");
-      axios
-        .delete("https://tendersobserver.herokuapp.com/articles")
-        .then((respons) => {
-          console.log(respons);
-          alert(respons.data.message);
-          store.dispatch("Authorization/Scrabing");
-        })
-        .catch((error) => {
-          console.log(error);
-        });
-     },
-     ClearArticals({commit})
-     {
-      commit("setloading",true)
-      axios.defaults.headers.common["x-access-token"] = localStorage.getItem("access-token");
-      axios
-        .delete("https://tendersobserver.herokuapp.com/articles")
-        .then((respons) => {
-          commit("setloading",false)
-          console.log(respons);
-          alert(respons.data.message);
-        })
-        .catch((error) => {
-          console.log(error);
-        });
-     },
-     Scrabing({commit})
-     {
-      commit("setloading",true)
-      axios.defaults.headers.common["x-access-token"] = localStorage.getItem("access-token");
-      /////1///
-      axios
-        .get("https://tendersobserver.herokuapp.com/kwf")
-        .then((respons) => {
-          console.log(respons);
-          alert(respons.data.message);
-          commit("setloading",true)
-                    /////2///  
-          axios
-          .get("https://tendersobserver.herokuapp.com/mofgov")
-          .then((respons) => {
-            console.log(respons);
-            alert(respons.data.message);
-            commit("setloading",true)
-                //////3//
-      axios
-      .get("https://tendersobserver.herokuapp.com/undp")
-      .then((respons) => {
-        console.log(respons);
-        alert(respons.data.message);
-        commit("setloading",true);
-              //////4//
-      axios
-      .get("https://tendersobserver.herokuapp.com/islamic")
-      .then((respons) => {
-        console.log(respons);
-        alert(respons.data.message);
-        commit("setloading",true);
-                  /////5//
-          axios
-          .get("https://tendersobserver.herokuapp.com/sermoid")
-          .then((respons) => {
-            console.log(respons);
-            alert(respons.data.message+"  Done ^_^");
-            commit("setloading",false);
-          })
-          .catch((error) => {
-            console.log(error);
-          });
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-
-          })
-          .catch((error) => {
-            console.log(error);
-          });
-        })
-        .catch((error) => {
-          console.log(error);
-        });
-     },
+     }
      
   },
   getters: {

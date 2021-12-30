@@ -1,6 +1,14 @@
  <template>
   <div class="cont">
       <HomeNavigation />
+      <CourseCard
+              class="col-lg-10% col-md-60% col-xs-6"
+              :key="id"
+              :name="Course"
+              :CourseId="_id"
+              :description="description"
+              :ins="instructor"
+            />
     <div>
       <div class="contaner" >
         <div class="all scroll">
