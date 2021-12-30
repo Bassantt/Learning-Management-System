@@ -6,9 +6,10 @@ import Login from "../views/Login.vue";
 import Register from "../views/Register.vue";
 import UserPage from "../views/UserPage.vue";
 import Admin from "../views/Admin.vue";
-import Courses from "../views/Courses.vue"
-import CoursePage from "../views/CoursePage.vue"
-import AddCourse from "../views/AddCourse.vue"
+import Courses from "../views/Courses.vue";
+import CoursePage from "../views/CoursePage.vue";
+import AddCourse from "../views/AddCourse.vue";
+import InstructorCourses from "../views/InstructorCourses.vue";
 import Element from 'element-ui'
 
 Vue.use(Element)
@@ -47,6 +48,11 @@ const routes = [
     component: Courses,
   },
   {
+    path: "/InstructorCourses/:ID",
+    name: "InstructorCourses",
+    component: InstructorCourses,
+  },
+  {
     path: "/CoursePage/:ID",
     name: "CoursePage",
     component: CoursePage,
@@ -57,7 +63,7 @@ const routes = [
     name: "AddCourse",
     component: AddCourse,
   }
-  
+
 ];
 
 const router = new VueRouter({

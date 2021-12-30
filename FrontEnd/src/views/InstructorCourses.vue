@@ -8,7 +8,7 @@
           <div class="row">
             <CourseCard
               class="col-lg-10% col-md-60% col-xs-6"
-              v-for="Course in courses"
+              v-for="Course in mycourses"
               :key="Course._id"
               :name="Course.name"
               :CourseId="Course._id"
@@ -78,17 +78,17 @@ import CourseCard from "@/components/CourseCard.vue";
 import HomeNavigation from "@/components/HomeNavigationBar.vue";
 import { mapGetters } from "vuex";
 export default {
-  name: "Courses",
+  name: "InstructorCourses",
   components: {
     CourseCard,
     HomeNavigation
   },
   mounted() {
-    this.$store.dispatch("Course/showCourses");
+    this.$store.dispatch("Course/showmyCourses");
   },
   computed: {
     ...mapGetters({
-      courses: "Course/getCourses",
+      mycourses: "Course/getmyCourses",
     })
   }
 };

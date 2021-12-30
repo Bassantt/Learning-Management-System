@@ -14,11 +14,15 @@
           <a>Home</a>
         </router-link>
 
-        <router-link :to="{ path: '/Courses/'+ user.user._id }"  tag="li"  v-if="isLoggedIn =='success' && (user.user.type=='Admin'||user.user.role=='Learner') ">
+        <router-link :to="{ path: '/Courses/'+ user.user._id }"  tag="li"  v-if="isLoggedIn =='success' && (user.user.type=='Admin'||user.user.role=='Learner')   ">
           <a>Courses</a>
         </router-link>
 
-        <router-link :to="{ path: '/AddCourse/'+ user.user._id }"  tag="li"  v-if="isLoggedIn =='success' && (user.user.type=='Admin'||user.user.role=='Instrucror') ">
+        <router-link :to="{ path: '/InstructorCourses/'+ user.user._id }"  tag="li"  v-if="isLoggedIn =='success' && (user.user.type=='Admin'||user.user.role=='Instructor')   ">
+          <a>MyCourses</a>
+        </router-link>
+
+        <router-link :to="{ path: '/AddCourse/'+ user.user._id }"  tag="li"  v-if="isLoggedIn =='success' && (user.user.type=='Admin'||user.user.role=='Instructor') ">
           <a>AddCourse</a>
         </router-link>
 
@@ -29,7 +33,7 @@
           :to="{ path: '/UserPage/' + user.user._id }"
           tag="li"
           v-if="isLoggedIn =='success' " >
-        <a>{{user.Email}}</a>
+        <a>Profile</a>
         </router-link>
         <router-link to="/Register" tag="li" v-if="isLoggedIn !='success' " >
         <a>Register</a>

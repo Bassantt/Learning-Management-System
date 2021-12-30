@@ -4,11 +4,15 @@ export default {
   namespaced: true,
   state: {
     Courses: [],
-     done:false
+    myCourses: [],
+    done:false
   },
   mutations: {
     setCourses(state, resCourses) {
       state.Courses = resCourses;
+    },
+    setmyCourses(state, resCourses) {
+      state.myCourses = resCourses;
     },
     createst(state,st)
     {
@@ -16,7 +20,7 @@ export default {
     }
   },
   actions: {
-    showCourses({ commit }) {
+    showCourses({ commit,state }) {
         const token = localStorage.getItem("access-token");
         console.log(token);
         axios.defaults.headers.common["Authorization"] = token;
@@ -29,8 +33,27 @@ export default {
         })
         .catch(error => {
           console.log(error);
+          state.Courses= [];
+          state.myCourses= [];
         });
     },
+    showmyCourses({ commit,state }) {
+      const token = localStorage.getItem("access-token");
+      console.log(token);
+      axios.defaults.headers.common["Authorization"] = token;
+    axios
+      .get("http://localhost:3000/me/courses")
+      .then(respons => {
+        let resCourses = respons.data.courses;
+        console.log(resCourses)
+        commit("setmyCourses", resCourses);
+      })
+      .catch(error => {
+        console.log(error);
+        state.Courses= [];
+        state.myCourses= [];
+      });
+  },
     create({ commit },course) {
       axios.defaults.headers.common["Authorization"] = localStorage.getItem("access-token");
       console.log(localStorage.getItem("access-token"));
@@ -55,5 +78,6 @@ export default {
   },
   getters: {
     getCourses: state => state.Courses,
+    getmyCourses: state => state.myCourses,
   }
 };

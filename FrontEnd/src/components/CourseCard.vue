@@ -15,7 +15,6 @@
     </div>
     <h4>{{description}}</h4>
     <h4> {{ins}}</h4>
-    <h4>{{infoins}}</h4>
   </div>
 </template>
 

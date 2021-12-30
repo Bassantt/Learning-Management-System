@@ -232,6 +232,7 @@ export default {
     user: (state) => state.User,
     userid: (state) => state.User.user._id,
     usertype: (state) => state.User.user.type,
+    role: (state) => state.User.user.role,
     msg:(state) => state.msg,
     users: (state) => state.users,
     api: (state) => state.api,
