@@ -4,12 +4,16 @@ export default {
   namespaced: true,
   state: {
     Courses: [],
-
+     done:false
   },
   mutations: {
     setCourses(state, resCourses) {
       state.Courses = resCourses;
     },
+    createst(state,st)
+    {
+      state.done=st
+    }
   },
   actions: {
     showCourses({ commit }) {
@@ -27,6 +31,27 @@ export default {
           console.log(error);
         });
     },
+    create({ commit },course) {
+      axios.defaults.headers.common["Authorization"] = localStorage.getItem("access-token");
+      console.log(localStorage.getItem("access-token"));
+      console.log(course);
+      axios.post("http://localhost:3000/me/courses", {
+        name:course.name,
+        description:course.description,
+        instructor:course.instructor,
+        syllabus:course.syllabus
+      })
+      .then((response) => {
+        console.log(response);
+        alert("Done Create");
+        commit("createst",true);
+      })
+      .catch(err=> {
+        console.log(err);
+        alert("Some Thing wrong , Please try to fix");
+        commit("createst",false);
+      });
+  },
   },
   getters: {
     getCourses: state => state.Courses,

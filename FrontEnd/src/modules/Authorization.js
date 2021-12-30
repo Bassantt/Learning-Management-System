@@ -91,7 +91,7 @@ export default {
         email: member.Email,
         type: member.Type,
         brithDay:member.BirthDate,
-        role:member.Type
+        role:member.role
       })
       .then((response) => {
         console.log(response);

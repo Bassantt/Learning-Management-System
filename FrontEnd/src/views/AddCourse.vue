@@ -1,42 +1,53 @@
 <template>
   <div class="cont">
-    <HomeNavigation />
+    <HomeNavigation />    
     <div class="container">
-      <h1>course name</h1>
-      <h2>
-        instructure information 
-      </h2>
+       <form class="row">
+          <div class="col-auto">
+            <label class="visually-hidden">coursename</label>
+            <input
+              type="text"
+              v-model="name"
+              class="form-control"
+              id="autoSizingInput"
+              placeholder="coursename"
+            />
+            <label class="visually-hidden">description</label>
+            <input
+              type="text"
+              v-model="description"
+              class="form-control"
+              id="autoSizingInput"
+              placeholder="description"
+            />
+            <input
+              type="text"
+              v-model="instructor"
+              class="form-control"
+              id="autoSizingInput"
+              placeholder="info about you"
+            />
+           <button @click="Addsyllabus" id="add" class="btn btn-primary">
+              +
+            </button>
+            <h2>week {{(this.syllabus).length +1}}</h2>
+            <p>write week description</p>
+            <input
+              type="text"
+              class="form-control"
+              id="autoSizingInput"
+              placeholder="syllabus description"
+              v-model="syllab"
+            />
+            <!-- <input type="file" ref="file" multiple="multiple" @change="print"> -->
+            
+            <button @click="Create" type="submit" class="btn btn-primary">
+              Create
+            </button>
+          </div>
+        </form>
     </div>
-  <div class="con">
-    <div>
-      <button class="tablink" @click="syllabus()" id="defaultOpen">syllabus</button>
-      <button class="tablink" @click="Pdfmaterial()">Pdfmaterial</button>
-      <button class="tablink" @click="Videos()">Videos</button>
-      <button class="tablink" @click="QA()">QA</button>
-    </div>
-	<div class="d-flex justify-content-center h-100">
-    <div  class="tabcontent" v-if="showsyllabus">
-    <h3>Home</h3>
-    <p>Home is where the heart is..</p>
-    </div>
-
-    <div  class="tabcontent" v-if="showPdfmaterial">
-    <h3>News</h3>
-    <p>Some news this fine day!</p> 
-    </div>
-
-    <div  class="tabcontent" v-if="showVideos">
-    <h3>Contact</h3>
-    <p>Get in touch, or swing by for a cup of coffee.</p>
-    </div>
-
-    <div  class="tabcontent" v-if="showQA">
-    <h3>About</h3>
-    <p>Who we are and what we do.</p>
-    </div>
-	</div>
 </div>
-  </div>
 </template>
 
 <script>
@@ -46,44 +57,69 @@ export default {
   components: {
     HomeNavigation
   },
-    data: function () {
+    data() {
     return {
-      showsyllabus:true,
-      showPdfmaterial:false,
-      showVideos:false,
-      showQA:false,
+      name:"",
+      description:"",
+      instructor:"",
+      syllabus:[],
+      syllab:"",
+    //   pdffiles:{},
+    //   videos:{},
     };
   },
-  methods: {
-    syllabus()
+   methods: {
+    // selectFile() {
+    //  this.file=this.$refs.file.files[0];
+    // },
+    // Add() {
+    // let formData = new FormData();
+    // for( var i = 0; i < this.$refs.file.files.length; i++ ){
+    //     let file = this.$refs.file.files[i];
+    //     formData.append('files[' + i + ']', file);
+    // }
+    // console.log(formData);
+    // },
+    // print()
+    // {
+    // let formData = new FormData();
+    // for( var i = 0; i < this.$refs.file.files.length; i++ ){
+    //     let file = this.$refs.file.files[i];
+    //     formData.append('files[' + i + ']', file);
+    // }
+    // console.log(formData);
+    // },
+    Create(e)
     {
-      this.showsyllabus=true;
-      this.showPdfmaterial=false;
-      this.showVideos=false;
-      this.showQA=false;
+    const newcourse = {
+      name:this.name,
+      description:this.description,
+      instructor:this.instructor,
+      syllabus:this.syllabus
+      };
+      console.log(newcourse);
+      this.$store.dispatch("Course/create", newcourse);
+      e.preventDefault();
+      this.name="";
+      this.description="";
+      this.instructor="";
+      this.syllabus=[];
     },
-    Pdfmaterial()
-    {
-      this.showsyllabus=false;
-      this.showPdfmaterial=true;
-      this.showVideos=false;
-      this.showQA=false;
-    },
-    Videos()
-    {
-      this.showsyllabus=false;
-      this.showPdfmaterial=false;
-      this.showVideos=true;
-      this.showQA=false;
-    },
-    QA()
-    {
-      this.showsyllabus=false;
-      this.showPdfmaterial=false;
-      this.showVideos=false;
-      this.showQA=true;
+    Addsyllabus(e)
+    {  e.preventDefault();
+        if(this.syllab!="") 
+       {
+           var ob={};
+           ob[(this.syllabus).length]=this.syllab;
+           this.syllabus.push(ob);
+           console.log(this.syllabus);
+           this.syllab = "";
+       }
+       else
+       {
+           alert("type a syllab ")
+       }
     }
- 
   },
   
 };
@@ -93,49 +129,39 @@ export default {
 
 @import url('https://fonts.googleapis.com/css?family=Numans');
 
-
 .cont{
-/* background-image: url('../assets/odgservices_lifestyle4.png');
+background-image: url('../assets/template.jpg');
 background-size: cover;
-background-repeat: no-repeat; */
-height: 100%;
+background-repeat: no-repeat;
 font-family: 'Numans', sans-serif;
 height: calc(100vh);
 align-content: center;
 }
-
-.tablink {
-  background-color: #555;
-  color: white;
-  border: none;
-  outline: none;
-  cursor: pointer;
-  padding: 14px 16px;
-  font-size: 17px;
-  width: 25%;
-}
-
-.tablink:hover {
-  background-color: #777;
-}
-
-
-.tabcontent {
-  color: black;
-  padding: 100px 20px;
-  height: auto;
-  width: 100%;
-  background-color:rgba(119, 119, 119, 0.103);
-}
 .con
 {
   width: 100%;
-  height: calc(85vh);
 }
-.container
-{ 
-  color: rgb(37, 91, 122);
-  font-size: 20px;
+.row
+{
+  background-color: rgba(15, 11, 11, 0.452);
+  width: 40%;
+  border-radius: 10px;
+  margin-left: 10%;
+  margin-top: 110px;
+  padding: 10px;
 }
 
+input
+{
+    width: 90%;
+    margin-bottom: 10px;
+}
+h2,p
+{
+    color:white
+}
+#add
+{
+    float:right;
+}
 </style>

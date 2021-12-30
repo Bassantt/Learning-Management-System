@@ -14,11 +14,11 @@
           <a>Home</a>
         </router-link>
 
-        <router-link :to="{ path: '/Courses/'+ user.user._id }"  tag="li"  v-if="isLoggedIn =='success' && (user.user.type=='Admin'||user.user.role=='learner') ">
+        <router-link :to="{ path: '/Courses/'+ user.user._id }"  tag="li"  v-if="isLoggedIn =='success' && (user.user.type=='Admin'||user.user.role=='Learner') ">
           <a>Courses</a>
         </router-link>
 
-        <router-link :to="{ path: '/AddCourse/'+ user.user._id }"  tag="li"  v-if="isLoggedIn =='success' && (user.user.type=='Admin'||user.user.role=='instructor') ">
+        <router-link :to="{ path: '/AddCourse/'+ user.user._id }"  tag="li"  v-if="isLoggedIn =='success' && (user.user.type=='Admin'||user.user.role=='Instrucror') ">
           <a>AddCourse</a>
         </router-link>
 
@@ -115,6 +115,7 @@ a:hover {
   line-height: 1.5;
   position: fixed;
   margin: 0;
+  z-index: 2000;
 }
 #logout {
   background-color: rgb(96, 155, 189);

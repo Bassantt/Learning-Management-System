@@ -59,6 +59,24 @@
                 value="Customer"
               ></el-option>
             </el-select>
+             <el-select
+              class="form-control"
+              v-model="role"
+              placeholder="role"
+            >
+              <el-option
+                id="opt"
+                class="form-control"
+                label="Learner"
+                value="Learner"
+              ></el-option>
+              <el-option
+                id="opt"
+                class="form-control"
+                label="Instructor"
+                value="Instructor"
+              ></el-option>
+            </el-select>
             <p >BirthDate</p>
             <input
               type="date"
@@ -93,7 +111,8 @@ export default {
       LastName: "",
       Email: "",
       Type: "",
-      BirthDate:""
+      BirthDate:"",
+      role:""
     };
   },
   methods: {
@@ -105,7 +124,8 @@ export default {
         LastName: this.LastName,
         Email: this.Email,
         Type: this.Type,
-        BirthDate:this.BirthDate
+        BirthDate:this.BirthDate,
+        role:this.role
       };
       console.log(newMember);
       this.$store.dispatch("Authorization/signup", newMember);
@@ -116,6 +136,7 @@ export default {
       this.LastName = "";
       this.Email = "";
       this.Type = "";
+      this.role="";
     },
   },
    computed: {
