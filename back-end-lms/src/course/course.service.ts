@@ -14,7 +14,6 @@ export class CourseService {
     }
 
     async addPdfToCourse(userId, courseId, file) {
-        console.log(file)
         await this.CourseRepository.updateCourse(userId, courseId, { $push: { activitiesAsPDF: { link: file.filename, title: file.originalname } } });
     }
 
@@ -29,7 +28,8 @@ export class CourseService {
     }
 
     async getCourse(courseId) {
-        return await this.CourseRepository.getCourse(courseId);
+        var course = await this.CourseRepository.getCourse(courseId);
+        return { course: course, questions: await this.getCourseQuestions(courseId) };
 
     }
 

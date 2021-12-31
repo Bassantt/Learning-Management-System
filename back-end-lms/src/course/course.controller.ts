@@ -103,7 +103,7 @@ export class CourseController {
     @UseGuards(AuthGuard('jwt'))
     @Get('/courses/file/:link')
     getFile(@Res() res: Response, @Param() params) {
-        const file = createReadStream(join(process.cwd(), './uploads/' + params.link));
+        const file = createReadStream(join(process.cwd(), '../uploads/' + params.link));
         file.pipe(res);
     }
 
