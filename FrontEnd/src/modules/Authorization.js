@@ -213,7 +213,7 @@ export default {
       axios.defaults.headers.common["x-access-token"] = localStorage.getItem("access-token");
       console.log("on changerole request");
       console.log(ob.userName);
-      axios.put("http://localhost:3000/user?userName="+ob.userName )
+      axios.put("http://localhost:3000/user/"+ob.userName )
         .then((respons) => {
           commit("delete",true)
           console.log(respons.data.message);

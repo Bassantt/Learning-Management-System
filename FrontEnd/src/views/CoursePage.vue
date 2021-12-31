@@ -11,12 +11,12 @@
         </div>
         <div class="conta ">
         <!-- {{course[0]}} -->
-        <h1>{{course[0].name}}</h1>
+        <h1>{{course.name}}</h1>
         <h2>
-          {{course[0].description}}
+          {{course.description}}
         </h2>
         <h2>
-          {{course[0].instructor}}
+          {{course.instructor}}
         </h2>
       </div>
       <div id="activities" v-if=" user.user.type=='Admin'||user.user.role=='Instructor'">
@@ -49,7 +49,7 @@
           <div class="row">
               <SyllabusCard
                 class="col-lg-10% col-md-60% col-xs-6"
-                v-for="(syllab,index) in course[0].syllabus"
+                v-for="(syllab,index) in course.syllabus"
                 :key="index"
                 :week="index"
                 :description="syllab[0][index]"
@@ -65,9 +65,9 @@
       <div  class="tabcontent" v-if="showVideos">
         <div class="row">
          <VideoCard
-             class="col-lg-10% col-md-60% col-xs-6"
+             class="col-lg-100% col-md-60% col-xs-6"
              key="index"
-             link="https://www.youtube.com/watch?v=s4ObxcdXoFE"
+             link="https://www.youtube.com/watch?v=ezbJwaLmOeM"
           />
 
           <!-- <VideoCard
@@ -93,10 +93,9 @@
         <div class="row">
             <QACard
                 class="col-lg-10% col-md-60% col-xs-6"
-                v-for="(questions,index) in course[0].questions"
+                v-for="(question,index) in course.questions"
                 :key="index"
-                :question= "questions[index]"
-                :replies="questions[index][replies]"
+                :id= "question[0]"
               />
             </div>
       </div>
@@ -169,7 +168,7 @@ export default {
     {
       console.log(this.question);
       const questiondata={
-        _id : this.course[0]._id,
+        _id : this.course._id,
         question : this.question
       }
       this.$store.dispatch("Course/makeaquestion", questiondata);

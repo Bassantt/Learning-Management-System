@@ -1,4 +1,5 @@
 import axios from "axios";
+import store from "../store";
 
 export default {
   namespaced: true,
@@ -6,7 +7,8 @@ export default {
     Courses: [],
     myCourses: [],
     done:false,
-    Course:{}
+    Course:{},
+    question:{},
   },
   mutations: {
     setCourses(state, resCourses) {
@@ -22,7 +24,10 @@ export default {
     setCourse(state,res)
     {
       state.Course=res;
-    }
+    },setquestion(state,res)
+    {
+      state.question=res;
+    },
     
   },
   actions: {
@@ -87,7 +92,7 @@ export default {
       console.log("hooo",CourseId);
       axios.defaults.headers.common["Authorization"] = token;
     axios
-      .get("http://localhost:3000/courses?course_id="+CourseId)
+      .get("http://localhost:3000/courses/"+CourseId)
       .then(respons => {
         let resCourse = respons.data;
         console.log("hhhh",resCourse)
@@ -96,12 +101,29 @@ export default {
       .catch(error => {
         console.log(error);
       });
-  },
-  makeaquestion({ commit },course) {
+  },///getquestion
+  getquestion({ commit},questionId) {
+    const token = localStorage.getItem("access-token");
+    console.log(token);
+    console.log("hooo",questionId);
+    axios.defaults.headers.common["Authorization"] = token;
+  axios
+    .get("http://localhost:3000/Questions/"+questionId)
+    .then(respons => {
+      let resquestion= respons.data;
+      console.log("hhhh",resquestion)
+      commit("setquestion", resquestion);
+    })
+    .catch(error => {
+      console.log(error);
+    });
+},
+  /////
+  makeaquestion({ commit},course) {
     axios.defaults.headers.common["Authorization"] = localStorage.getItem("access-token");
     console.log(localStorage.getItem("access-token"));
     console.log(course);
-    axios.post("http://localhost:3000/courses?course_id="+course._id, {
+    axios.post("http://localhost:3000/courses/"+course._id, {
       question:course.question
     })
     .then((response) => {
@@ -114,17 +136,15 @@ export default {
       alert("Some Thing wrong , Please try to fix");
       commit("createst",false);
     });
+    store.dispatch("Course/getCourse", course._id); 
 },
 /////////////
-Addreply({ commit },course) {
+Addreply({ commit},replydata) {
   axios.defaults.headers.common["Authorization"] = localStorage.getItem("access-token");
   console.log(localStorage.getItem("access-token"));
-  console.log(course);
-  axios.post("http://localhost:3000/", {
-    name:course.name,
-    description:course.description,
-    instructor:course.instructor,
-    syllabus:course.syllabus
+  console.log(replydata);
+  axios.post("http://localhost:3000/Questions/"+replydata.question_id, {
+    reply:replydata.reply
   })
   .then((response) => {
     console.log(response);
@@ -136,6 +156,7 @@ Addreply({ commit },course) {
     alert("Some Thing wrong , Please try to fix");
     commit("createst",false);
   });
+  store.dispatch("Course/getquestion", replydata.question_id); 
 },
 ////////
 AddVideo({ commit },course) {
@@ -186,5 +207,6 @@ Addpdf({ commit },course) {
     getCourses: state => state.Courses,
     getmyCourses: state => state.myCourses,
     getCourse: state => state.Course,
+    question: state => state.question,
   }
 };
