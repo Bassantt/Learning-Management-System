@@ -5,7 +5,8 @@ export default {
   state: {
     Courses: [],
     myCourses: [],
-    done:false
+    done:false,
+    Course:{}
   },
   mutations: {
     setCourses(state, resCourses) {
@@ -16,8 +17,13 @@ export default {
     },
     createst(state,st)
     {
-      state.done=st
+      state.done=st;
+    },
+    setCourse(state,res)
+    {
+      state.Course=res;
     }
+    
   },
   actions: {
     showCourses({ commit,state }) {
@@ -75,9 +81,47 @@ export default {
         commit("createst",false);
       });
   },
+    getCourse({ commit},CourseId) {
+      const token = localStorage.getItem("access-token");
+      console.log(token);
+      console.log("hooo",CourseId);
+      axios.defaults.headers.common["Authorization"] = token;
+    axios
+      .get("http://localhost:3000/courses?course_id="+CourseId)
+      .then(respons => {
+        let resCourse = respons.data;
+        console.log("hhhh",resCourse)
+        commit("setCourse", resCourse);
+      })
+      .catch(error => {
+        console.log(error);
+      });
+  },
+  makeaquestion({ commit },course) {
+    axios.defaults.headers.common["Authorization"] = localStorage.getItem("access-token");
+    console.log(localStorage.getItem("access-token"));
+    console.log(course);
+    axios.post("http://localhost:3000/me/courses", {
+      name:course.name,
+      description:course.description,
+      instructor:course.instructor,
+      syllabus:course.syllabus
+    })
+    .then((response) => {
+      console.log(response);
+      alert("Done Create");
+      commit("createst",true);
+    })
+    .catch(err=> {
+      console.log(err);
+      alert("Some Thing wrong , Please try to fix");
+      commit("createst",false);
+    });
+},
   },
   getters: {
     getCourses: state => state.Courses,
     getmyCourses: state => state.myCourses,
+    getCourse: state => state.Course,
   }
 };

@@ -2,10 +2,15 @@
   <div class="cont">
     <HomeNavigation />
     <div class="container">
-      <h1>course name</h1>
+      {{course[0]}}
+      <h1>{{course[0].name}}</h1>
       <h2>
-        instructure information 
+        {{course[0].description}}
       </h2>
+      <h2>
+        {{course[0].instructor}}
+      </h2>
+       {{course[0].syllabus[0]}}
     </div>
   <div class="con">
     <div>
@@ -16,8 +21,15 @@
     </div>
 	<div class="d-flex justify-content-center h-100">
     <div  class="tabcontent" v-if="showsyllabus">
-    <h3>Home</h3>
-    <p>Home is where the heart is..</p>
+        <div class="row">
+            <SyllabusCard
+              class="col-lg-10% col-md-60% col-xs-6"
+              v-for="(syllab,index) in course[0].syllabus"
+              :key="index"
+              :week="index"
+              :description="syllab[0][index]"
+            />
+          </div>
     </div>
 
     <div  class="tabcontent" v-if="showPdfmaterial">
@@ -31,8 +43,26 @@
     </div>
 
     <div  class="tabcontent" v-if="showQA">
-    <h3>About</h3>
-    <p>Who we are and what we do.</p>
+    <input
+        type="text"
+        v-model="question"
+        class="form-control"
+        id="autoSizingInput"
+        placeholder="ask a question"
+    />
+    <button @click="Addquestion" class="btn btn-primary">
+    Post
+    </button>
+
+      <div class="row">
+          <QACard
+              class="col-lg-10% col-md-60% col-xs-6"
+              v-for="(questions,index) in course[0].questions"
+              :key="index"
+              :question= "questions[index]"
+              :replies="questions[index][replies]"
+            />
+          </div>
     </div>
 	</div>
 </div>
@@ -40,11 +70,16 @@
 </template>
 
 <script>
+import { mapGetters } from "vuex";
 import HomeNavigation from "@/components/HomeNavigationBar.vue";
+import SyllabusCard from "@/components/SyllabusCard.vue";
+import QACard from "@/components/QACard.vue";
 export default {
   name: "CoursePage",
   components: {
-    HomeNavigation
+    HomeNavigation,
+    SyllabusCard,
+    QACard
   },
     data: function () {
     return {
@@ -52,8 +87,14 @@ export default {
       showPdfmaterial:false,
       showVideos:false,
       showQA:false,
+      question:"",
     };
-  },
+  } ,
+   created: function() {
+    this.$store.dispatch(
+      "Course/getCourse",
+      this.$route.params.ID
+    );},
   methods: {
     syllabus()
     {
@@ -82,8 +123,18 @@ export default {
       this.showPdfmaterial=false;
       this.showVideos=false;
       this.showQA=true;
+    },
+    Addquestion()
+    {
+      console.log(this.question);
+      this.$store.dispatch("Course/makeaquestion", this.question);
     }
  
+  },
+  computed: {
+    ...mapGetters({
+      course: "Course/getCourse"
+    })
   },
   
 };
@@ -122,7 +173,7 @@ align-content: center;
 
 .tabcontent {
   color: black;
-  padding: 100px 20px;
+  padding: 10px 20px;
   height: auto;
   width: 100%;
   background-color:rgba(119, 119, 119, 0.103);
@@ -136,6 +187,13 @@ align-content: center;
 { 
   color: rgb(37, 91, 122);
   font-size: 20px;
+}
+input
+{
+  text-align: center;
+  width: 60%;
+  margin-left: 20%;
+  margin-bottom: 5px;
 }
 
 </style>
