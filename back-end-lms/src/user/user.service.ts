@@ -4,9 +4,7 @@ import * as bcrypt from 'bcrypt';
 import { UserRepository } from './user-repository.service';
 import { CourseRepository } from '../course/course-repository.service';
 import { CreateDto } from '../course/dto/creation.dto'
-import { RegisterDto } from '../auth/dto/register.dto';
 import { LoginDto } from '../auth/dto/login.dto';
-import { UpdatDto } from './dto/update.dto';
 
 @Injectable()
 export class UserService {
@@ -23,7 +21,15 @@ export class UserService {
         return user;
     }
 
-    async createUser(createUserDto: RegisterDto) {
+    async createUser(createUserDto: {
+        userName: string;
+        password: string;
+        email: string;
+        firstName: string;
+        lastName: string;
+        brithDay: string;
+        type?: string;
+    }) {
         if (await this.UserRepository.findByEmailORUserName(createUserDto.email))
             throw new HttpException('"email" should not have acount', HttpStatus.FORBIDDEN,);
         if (await this.UserRepository.findByEmailORUserName(createUserDto.userName))
@@ -32,7 +38,7 @@ export class UserService {
         const salt = await bcrypt.genSalt(10);
         let hash = await bcrypt.hash(createUserDto.password, salt);
         createUserDto.password = hash;
-        if (createUserDto.type && createUserDto.type == "admin") createUserDto.role = "Instructor";
+        if (createUserDto.type && createUserDto.type == "admin") createUserDto['role'] = "Instructor";
         return await this.UserRepository.createUser(createUserDto);
     }
 
@@ -40,7 +46,14 @@ export class UserService {
         await this.UserRepository.changeUSerRole(userName, adminId);
     }
 
-    async updateData(userId: String, updateData: UpdatDto) {
+    async updateData(userId: String, updateData: {
+        userName?: string;
+        password?: string;
+        firstName?: string;
+        lastName?: string;
+        oldPassword?: string;
+        brithDay?: string;
+    }) {
         if (updateData.password) {
             const salt = await bcrypt.genSalt(10);
             let hash = await bcrypt.hash(updateData.password, salt);
@@ -60,6 +73,10 @@ export class UserService {
 
     async findAllUsers(): Promise<User[] | null> {
         return await this.UserRepository.findAll();
+    }
+
+    async findLearnerUsers() {
+        return await this.UserRepository.getUsersLearner();
     }
 
 

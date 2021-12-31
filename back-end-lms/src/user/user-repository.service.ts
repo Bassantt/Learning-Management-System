@@ -5,8 +5,6 @@ import { ModelType } from 'typegoose';
 import { InjectModel } from "nestjs-typegoose";
 import { BaseRepository } from "../shared/repository/base.service";
 import * as bcrypt from 'bcrypt';
-import { UpdatDto } from './dto/update.dto';
-import { identity } from "rxjs";
 
 const ObjectId = require('mongoose').Types.ObjectId;
 
@@ -32,18 +30,27 @@ export class UserRepository extends BaseRepository<User>  {
 
     async changeUSerRole(userName, adminId) {
         const admin = await this.findByID(adminId);
-        if (!admin && admin.type != "admin") throw new HttpException('this task can be done only be admins', HttpStatus.UNAUTHORIZED);
+        if (!admin || admin.type != "admin") throw new HttpException('this task can be done only be admins', HttpStatus.UNAUTHORIZED);
         const user = await this.findByEmailORUserName(userName);
         if (user && (user.role && user.role == "Learner") || !user.role) await this.update(user.id, { role: "Instructor" })
         else throw new HttpException('user is instrucror', HttpStatus.BAD_REQUEST);
     }
 
-    async updateUserData(id: any, updateInfo: UpdatDto): Promise<boolean> {
+    async updateUserData(id: any, updateInfo: {
+        userName?: string;
+        password?: string;
+        firstName?: string;
+        lastName?: string;
+        oldPassword?: string;
+        brithDay?: string;
+    }): Promise<boolean> {
         const user = await this.findByID(id);
         if (updateInfo.userName && updateInfo.userName != user.userName)
             if (updateInfo.userName && await this.findByUserName(updateInfo.userName)) throw new HttpException('This userName exists', HttpStatus.BAD_REQUEST);
         if (updateInfo.password && !updateInfo.oldPassword) throw new HttpException('To update password should enter password', HttpStatus.BAD_REQUEST);
-        if (! await bcrypt.compare(updateInfo.oldPassword, user.password)) throw new HttpException('old password is not correct', HttpStatus.FORBIDDEN);
+        else if (updateInfo.password && updateInfo.oldPassword)
+            if (! await bcrypt.compare(updateInfo.oldPassword, user.password)) throw new HttpException('old password is not correct', HttpStatus.FORBIDDEN);
+        updateInfo.oldPassword = undefined
         return await this.update(id, updateInfo)
     }
 

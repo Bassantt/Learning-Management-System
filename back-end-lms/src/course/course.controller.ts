@@ -34,13 +34,13 @@ export class CourseController {
 
     @UseGuards(AuthGuard('jwt'))
     @Post('/me/courses')
-    async createCourse(@Request() req, @Body() courseData: { description: string; name: string; syllabus?: [{ week_number: Number, title: String }]; }) {
+    async createCourse(@Request() req, @Body() courseData: { description: string; name: string; instructorInfo?: string; syllabus?: [{ week_number: Number, title: String }]; }) {
         return await this.userService.createCourse(req.user._id, courseData);
     }
 
     @UseGuards(AuthGuard('jwt'))
     @Put('/me/courses/:course_id')
-    async updateCourse(@Request() req, @Param() Params, @Body() courseData: { description: string; name: string; syllabus?: [{ week_number: Number, title: String }]; }) {
+    async updateCourse(@Request() req, @Param() Params, @Body() courseData: { description?: string; name?: string; instructorInfo?: string; syllabus?: [{ week_number: Number, title: String }]; }) {
         return await this.courseService.updateCourse(req.user._id, Params.course_id, courseData);
     }
 
@@ -84,6 +84,20 @@ export class CourseController {
     }))
     async uploadpdf(@UploadedFile() file, @Param() Params, @Request() req) {
         await this.courseService.addPdfToCourse(req.user._id, Params.course_id, file);
+    }
+
+    @UseGuards(AuthGuard('jwt'))
+    @Get('/user/:user_id/courses')
+    async getUserCourses(@Param() Param) {
+        const courses = await this.userService.getInstractorCourses(Param.user_id);
+        return { courses };
+    }
+
+    @UseGuards(AuthGuard('jwt'))
+    @Get('/me/courses')
+    async getMyCourses(@Request() req) {
+        const courses = await this.userService.getInstractorCourses(req.user._id);
+        return { courses };
     }
 
     @UseGuards(AuthGuard('jwt'))

@@ -9,6 +9,9 @@ export class Course {
     @prop({ required: true })
     @IsString()
     name: string;
+    @prop({ required: false })
+    @IsString()
+    instructorInfo?: string;
     @prop({ required: true })
     @prop({ ref: User })
     instructor: Ref<User>;

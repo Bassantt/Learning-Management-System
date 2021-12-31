@@ -41,8 +41,10 @@ export class CourseService {
         const course = await this.CourseRepository.getCourse(courseId);
         var questions = []
         if (course.questions && course.questions != [])
-            for (let i = 0; i < course.questions.length; i++)
-                questions.push(course.questions[i]);
+            for (let i = 0; i < course.questions.length; i++) {
+                const question = await this.QuestionRepository.getQuestion(course.questions[i][0]);
+                questions.push(question);
+            }
         return questions;
     }
 
