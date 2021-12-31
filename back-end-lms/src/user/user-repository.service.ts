@@ -50,7 +50,7 @@ export class UserRepository extends BaseRepository<User>  {
         if (updateInfo.password && !updateInfo.oldPassword) throw new HttpException('To update password should enter password', HttpStatus.BAD_REQUEST);
         else if (updateInfo.password && updateInfo.oldPassword)
             if (! await bcrypt.compare(updateInfo.oldPassword, user.password)) throw new HttpException('old password is not correct', HttpStatus.FORBIDDEN);
-        console.log(20000)
+        updateInfo.oldPassword = undefined
         return await this.update(id, updateInfo)
     }
 
