@@ -2,10 +2,12 @@
   <div class="card rounded col-lg-20%">
     <div id="cardimg">
     </div>
-    <div class="card-img-overlay">
-      <h4 class="card-title" id="categoryname">{{question}}</h4>
+    <div>
+      <h4 class="card-title" id="categoryname">{{id}}</h4>
     </div>
-    <h4>{{replies}}</h4>
+    <h1>{{question.question}}</h1>
+    <h4>{{question.replies[0][0].reply}}</h4>
+    <h4>{{question.replies[1][0].reply}}</h4>
     <input
         type="text"
         v-model="reply"
@@ -21,27 +23,41 @@
 
 
 <script>
+import { mapGetters } from "vuex";
 export default {
   name: "QACard",
   props: {
-    question: {
+    id: {
       type: String
-    },
-    replies: {
-      type: Array
     }
   },
   data() {
     return {
       reply:"",
     };
-  },
+  } ,
+   created: function() {
+     console.log(this.id);
+    this.$store.dispatch(
+      "Course/getquestion",
+      this.id
+    );},
   methods: {
     Addreply() {
        console.log(this.reply);
-       this.$store.dispatch("Course/Addreply", this.reply);
+       const replydata={
+        question_id : this.id,
+        reply : this.reply
+      }
+       this.$store.dispatch("Course/Addreply", replydata);
+       this.reply=""
     }
-  }
+  },
+  computed: {
+    ...mapGetters({
+      question: "Course/question",
+    })
+  },
 };
 </script>
 
