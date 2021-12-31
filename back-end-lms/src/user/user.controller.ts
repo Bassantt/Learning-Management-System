@@ -38,19 +38,7 @@ export class UserController {
         await this.userService.updateData(req.user._id, updateData)
     }
 
-    @UseGuards(AuthGuard('jwt'))
-    @Get('/user/:user_id/courses')
-    async getUserCourses(@Param() Param) {
-        const courses = await this.userService.getInstractorCourses(Param.user_id);
-        return { courses };
-    }
-
-    @UseGuards(AuthGuard('jwt'))
-    @Get('/me/courses')
-    async getMyCourses(@Request() req) {
-        const courses = await this.userService.getInstractorCourses(req.user._id);
-        return { courses };
-    }
+   
 
     @Get('/users')
     async all(): Promise<User[] | null> {

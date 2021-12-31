@@ -87,6 +87,20 @@ export class CourseController {
     }
 
     @UseGuards(AuthGuard('jwt'))
+    @Get('/user/:user_id/courses')
+    async getUserCourses(@Param() Param) {
+        const courses = await this.userService.getInstractorCourses(Param.user_id);
+        return { courses };
+    }
+
+    @UseGuards(AuthGuard('jwt'))
+    @Get('/me/courses')
+    async getMyCourses(@Request() req) {
+        const courses = await this.userService.getInstractorCourses(req.user._id);
+        return { courses };
+    }
+
+    @UseGuards(AuthGuard('jwt'))
     @Get('/courses/file/:link')
     getFile(@Res() res: Response, @Param() params) {
         const file = createReadStream(join(process.cwd(), './uploads/' + params.link));

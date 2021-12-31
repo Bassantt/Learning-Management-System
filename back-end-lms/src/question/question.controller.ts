@@ -20,7 +20,7 @@ export class QuestionController {
     @UseGuards(AuthGuard('jwt'))
     @Get('/Questions/:question_id')
     async getCourse(@Param() Params) {
-        return await this.questionService.getQuestion(Params.course_id);
+        return await this.questionService.getQuestion(Params.question_id);
     }
 
 
