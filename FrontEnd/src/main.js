@@ -9,11 +9,12 @@ import Vuelidate from "vuelidate";
 import axios from "axios";
 import ElementUI from 'element-ui';
 import {BootstrapVue, IconsPlugin} from 'bootstrap-vue';
+import Embed from 'v-video-embed'
 
 Vue.use(ElementUI)
 Vue.use(BootstrapVue)
 Vue.use(IconsPlugin)
-
+Vue.use(Embed);
 Vue.config.productionTip = false;
 Vue.use(Vuelidate);
 Vue.prototype.$http = axios;

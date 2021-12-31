@@ -101,15 +101,12 @@ export default {
     axios.defaults.headers.common["Authorization"] = localStorage.getItem("access-token");
     console.log(localStorage.getItem("access-token"));
     console.log(course);
-    axios.post("http://localhost:3000/", {
-      name:course.name,
-      description:course.description,
-      instructor:course.instructor,
-      syllabus:course.syllabus
+    axios.post("http://localhost:3000/courses?course_id="+course._id, {
+      question:course.question
     })
     .then((response) => {
       console.log(response);
-      alert("Done Create");
+      alert("Done Add");
       commit("createst",true);
     })
     .catch(err=> {

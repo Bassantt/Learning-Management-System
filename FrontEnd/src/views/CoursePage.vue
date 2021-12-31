@@ -63,10 +63,21 @@
       </div>
 
       <div  class="tabcontent" v-if="showVideos">
-      <h3>Contact</h3>
-      <p>Get in touch, or swing by for a cup of coffee.</p>
-      </div>
+        <div class="row">
+         <VideoCard
+             class="col-lg-10% col-md-60% col-xs-6"
+             key="index"
+             link="https://www.youtube.com/watch?v=s4ObxcdXoFE"
+          />
 
+          <!-- <VideoCard
+             class="col-lg-10% col-md-60% col-xs-6"
+             v-for="(syllab,index) in course[0].syllabus"
+             :key="index"
+             :link="index"
+          /> -->
+        </div>
+      </div>  
       <div  class="tabcontent" v-if="showQA">
       <input
           type="text"
@@ -100,12 +111,14 @@ import { mapGetters } from "vuex";
 import HomeNavigation from "@/components/HomeNavigationBar.vue";
 import SyllabusCard from "@/components/SyllabusCard.vue";
 import QACard from "@/components/QACard.vue";
+import VideoCard from  "@/components/VideoCard.vue";
 export default {
   name: "CoursePage",
   components: {
     HomeNavigation,
     SyllabusCard,
-    QACard
+    QACard,
+    VideoCard
   },
     data: function () {
     return {
@@ -155,7 +168,12 @@ export default {
     Addquestion()
     {
       console.log(this.question);
-      this.$store.dispatch("Course/makeaquestion", this.question);
+      const questiondata={
+        _id : this.course[0]._id,
+        question : this.question
+      }
+      this.$store.dispatch("Course/makeaquestion", questiondata);
+      this.question="";
     },
      AddVideo()
     {

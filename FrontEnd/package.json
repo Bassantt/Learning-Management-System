@@ -19,6 +19,7 @@
     "express": "^4.17.1",
     "normalize.css": "^8.0.1",
     "serve-static": "^1.14.1",
+    "v-video-embed": "^1.0.8",
     "vue": "^2.6.14",
     "vue-chartjs": "^3.5.1",
     "vue-router": "^3.5.1",
