@@ -8,7 +8,6 @@ export default {
     myCourses: [],
     done:false,
     Course:{},
-    question:{},
   },
   mutations: {
     setCourses(state, resCourses) {
@@ -24,10 +23,7 @@ export default {
     setCourse(state,res)
     {
       state.Course=res;
-    },setquestion(state,res)
-    {
-      state.question=res;
-    },
+    }
     
   },
   actions: {
@@ -101,24 +97,7 @@ export default {
       .catch(error => {
         console.log(error);
       });
-  },///getquestion
-  getquestion({ commit},questionId) {
-    const token = localStorage.getItem("access-token");
-    console.log(token);
-    console.log("hooo",questionId);
-    axios.defaults.headers.common["Authorization"] = token;
-  axios
-    .get("http://localhost:3000/Questions/"+questionId)
-    .then(respons => {
-      let resquestion= respons.data;
-      console.log("hhhh",resquestion)
-      commit("setquestion", resquestion);
-    })
-    .catch(error => {
-      console.log(error);
-    });
-},
-  /////
+  },
   makeaquestion({ commit},course) {
     axios.defaults.headers.common["Authorization"] = localStorage.getItem("access-token");
     console.log(localStorage.getItem("access-token"));
@@ -156,7 +135,7 @@ Addreply({ commit},replydata) {
     alert("Some Thing wrong , Please try to fix");
     commit("createst",false);
   });
-  store.dispatch("Course/getquestion", replydata.question_id); 
+  store.dispatch("Course/getCourse", replydata.course_id); 
 },
 ////////
 AddVideo({ commit },course) {
@@ -207,6 +186,5 @@ Addpdf({ commit },course) {
     getCourses: state => state.Courses,
     getmyCourses: state => state.myCourses,
     getCourse: state => state.Course,
-    question: state => state.question,
   }
 };

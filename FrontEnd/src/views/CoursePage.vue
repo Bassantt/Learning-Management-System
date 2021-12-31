@@ -11,12 +11,12 @@
         </div>
         <div class="conta ">
         <!-- {{course[0]}} -->
-        <h1>{{course.name}}</h1>
+        <h1>{{course.course.name}}</h1>
         <h2>
-          {{course.description}}
+          {{course.course.description}}
         </h2>
         <h2>
-          {{course.instructor}}
+          {{course.course.instructor}}
         </h2>
       </div>
       <div id="activities" v-if=" user.user.type=='Admin'||user.user.role=='Instructor'">
@@ -49,10 +49,10 @@
           <div class="row">
               <SyllabusCard
                 class="col-lg-10% col-md-60% col-xs-6"
-                v-for="(syllab,index) in course.syllabus"
+                v-for="(syllab,index) in course.course.syllabus"
                 :key="index"
                 :week="index"
-                :description="syllab[0][index]"
+                :description="syllab[0][0]"
               />
             </div>
       </div>
@@ -93,9 +93,12 @@
         <div class="row">
             <QACard
                 class="col-lg-10% col-md-60% col-xs-6"
-                v-for="(question,index) in course.questions"
-                :key="index"
-                :id= "question[0]"
+                v-for=" question in course.questions"
+                :key="question._id"
+                :id= "question._id"
+                :question="question.question"
+                :replies="question.replies"
+                :course_id="question.course"
               />
             </div>
       </div>
@@ -168,7 +171,7 @@ export default {
     {
       console.log(this.question);
       const questiondata={
-        _id : this.course._id,
+        _id : this.course.course._id,
         question : this.question
       }
       this.$store.dispatch("Course/makeaquestion", questiondata);

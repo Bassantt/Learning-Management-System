@@ -1,63 +1,71 @@
 <template>
-  <div class="card rounded col-lg-20%">
-    <div id="cardimg">
-    </div>
-    <div>
-      <h4 class="card-title" id="categoryname">{{id}}</h4>
-    </div>
-    <h1>{{question.question}}</h1>
-    <h4>{{question.replies[0][0].reply}}</h4>
-    <h4>{{question.replies[1][0].reply}}</h4>
-    <input
-        type="text"
-        v-model="reply"
-        class="form-control"
-        id="autoSizingInput"
-        placeholder="reply"
-    />
-    <button @click="Addreply" class="btn btn-primary">
-    reply
-    </button>
+  <div class=" container card rounded col-lg-20%">
+    <h1>{{question}}</h1>
+            <div class="row">
+            <Reply
+                class="col-lg-10% col-md-60% col-xs-6"
+                v-for=" (reply,index) in replies"
+                :key="index"
+                :reply="reply[0].reply"
+                :userName="reply[0].userName"
+                :course_id="course_id"
+              />
+            </div>
+        <div>     
+            <input
+                type="text"
+                v-model="reply"
+                class="form-control"
+                id="autoSizingInput"
+                placeholder="reply"
+            />
+            <button @click="Addreply" class="btn btn-primary">
+            reply
+            </button>
+        </div>     
   </div>
 </template>
 
 
 <script>
-import { mapGetters } from "vuex";
+import Reply from  "@/components/Reply.vue";
 export default {
   name: "QACard",
+    components: {
+    Reply
+  },
   props: {
     id: {
       type: String
-    }
+    },
+    question: {
+      type: String
+    },
+    replies: {
+      type: Array
+    },
+    course_id: {
+      type: String
+    },
+    
   },
   data() {
     return {
       reply:"",
     };
-  } ,
-   created: function() {
-     console.log(this.id);
-    this.$store.dispatch(
-      "Course/getquestion",
-      this.id
-    );},
+  },
   methods: {
     Addreply() {
        console.log(this.reply);
        const replydata={
         question_id : this.id,
-        reply : this.reply
+        reply : this.reply,
+        course_id:this.course_id
       }
        this.$store.dispatch("Course/Addreply", replydata);
        this.reply=""
     }
-  },
-  computed: {
-    ...mapGetters({
-      question: "Course/question",
-    })
-  },
+  }
 };
 </script>
 
@@ -73,9 +81,9 @@ export default {
   background-color: rgb(110, 106, 106);
 }
 .card {
-  background: #13121256;
-  width:400px;
-  height: 300px;
+  background-color: #1312122c;
+  width:80%;
+  height:auto;
   margin-left: 50px;
   margin-right: 20px;
   margin-top: 18px;
@@ -91,5 +99,20 @@ h4 {
   font-weight: 790;
   color: black;
   margin-bottom: 4px;
+}
+.btn
+{
+  margin-bottom: 4px;
+}
+input
+{
+  width:100%;
+  margin-top : 4px;
+  margin-bottom : 4px;
+}
+h1
+{
+  background-color: rgba(37, 91, 122, 0.664);
+  border-radius: 1px;
 }
 </style>
