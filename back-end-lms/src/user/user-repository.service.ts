@@ -5,8 +5,6 @@ import { ModelType } from 'typegoose';
 import { InjectModel } from "nestjs-typegoose";
 import { BaseRepository } from "../shared/repository/base.service";
 import * as bcrypt from 'bcrypt';
-import { UpdatDto } from './dto/update.dto';
-import { identity } from "rxjs";
 
 const ObjectId = require('mongoose').Types.ObjectId;
 
@@ -38,12 +36,21 @@ export class UserRepository extends BaseRepository<User>  {
         else throw new HttpException('user is instrucror', HttpStatus.BAD_REQUEST);
     }
 
-    async updateUserData(id: any, updateInfo: UpdatDto): Promise<boolean> {
+    async updateUserData(id: any, updateInfo: {
+        userName?: string;
+        password?: string;
+        firstName?: string;
+        lastName?: string;
+        oldPassword?: string;
+        brithDay?: string;
+    }): Promise<boolean> {
         const user = await this.findByID(id);
         if (updateInfo.userName && updateInfo.userName != user.userName)
             if (updateInfo.userName && await this.findByUserName(updateInfo.userName)) throw new HttpException('This userName exists', HttpStatus.BAD_REQUEST);
         if (updateInfo.password && !updateInfo.oldPassword) throw new HttpException('To update password should enter password', HttpStatus.BAD_REQUEST);
-        if (! await bcrypt.compare(updateInfo.oldPassword, user.password)) throw new HttpException('old password is not correct', HttpStatus.FORBIDDEN);
+        else if (updateInfo.password && updateInfo.oldPassword)
+            if (! await bcrypt.compare(updateInfo.oldPassword, user.password)) throw new HttpException('old password is not correct', HttpStatus.FORBIDDEN);
+        console.log(20000)
         return await this.update(id, updateInfo)
     }
 

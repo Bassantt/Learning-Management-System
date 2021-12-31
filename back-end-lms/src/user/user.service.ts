@@ -4,9 +4,7 @@ import * as bcrypt from 'bcrypt';
 import { UserRepository } from './user-repository.service';
 import { CourseRepository } from '../course/course-repository.service';
 import { CreateDto } from '../course/dto/creation.dto'
-import { RegisterDto } from '../auth/dto/register.dto';
 import { LoginDto } from '../auth/dto/login.dto';
-import { UpdatDto } from './dto/update.dto';
 
 @Injectable()
 export class UserService {
@@ -48,7 +46,14 @@ export class UserService {
         await this.UserRepository.changeUSerRole(userName, adminId);
     }
 
-    async updateData(userId: String, updateData: UpdatDto) {
+    async updateData(userId: String, updateData: {
+        userName?: string;
+        password?: string;
+        firstName?: string;
+        lastName?: string;
+        oldPassword?: string;
+        brithDay?: string;
+    }) {
         if (updateData.password) {
             const salt = await bcrypt.genSalt(10);
             let hash = await bcrypt.hash(updateData.password, salt);

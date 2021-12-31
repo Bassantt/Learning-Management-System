@@ -2,7 +2,6 @@ import { Controller, UseGuards, Get, Put, Request, Param, Body } from '@nestjs/c
 import { AuthGuard } from '@nestjs/passport';
 import { UserService } from './user.service';
 import { User } from "../models/user.schema";
-import { UpdatDto } from './dto/update.dto';
 
 
 @Controller('')
@@ -27,7 +26,15 @@ export class UserController {
 
     @UseGuards(AuthGuard('jwt'))
     @Put('/me')
-    async updateMyData(@Request() req, @Body() updateData: UpdatDto) {
+    async updateMyData(@Request() req, @Body() updateData: {
+        userName?: string;
+        password?: string;
+        firstName?: string;
+        lastName?: string;
+        oldPassword?: string;
+        brithDay?: string;
+    }) {
+
         await this.userService.updateData(req.user._id, updateData)
     }
 
@@ -44,7 +51,6 @@ export class UserController {
         const courses = await this.userService.getInstractorCourses(req.user._id);
         return { courses };
     }
-
 
     @Get('/users')
     async all(): Promise<User[] | null> {
