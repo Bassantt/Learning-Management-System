@@ -78,7 +78,7 @@ export class CourseController {
     @Post('/me/courses/:course_id/pdf')
     @UseInterceptors(FileInterceptor("file", {
         storage: diskStorage({
-            destination: './uploads',
+            destination: '../uploads',
             filename: editFileName,
         }),
     }))
