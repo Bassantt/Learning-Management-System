@@ -39,6 +39,7 @@ export default {
   methods: {
     Addreply() {
        console.log(this.reply);
+       this.$store.dispatch("Course/Addreply", this.reply);
     }
   }
 };
