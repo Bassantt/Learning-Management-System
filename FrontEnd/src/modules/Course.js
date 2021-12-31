@@ -138,15 +138,13 @@ Addreply({ commit},replydata) {
   store.dispatch("Course/getCourse", replydata.course_id); 
 },
 ////////
-AddVideo({ commit },course) {
+AddVideo({ commit },Videodata) {
   axios.defaults.headers.common["Authorization"] = localStorage.getItem("access-token");
   console.log(localStorage.getItem("access-token"));
-  console.log(course);
-  axios.post("http://localhost:3000/", {
-    name:course.name,
-    description:course.description,
-    instructor:course.instructor,
-    syllabus:course.syllabus
+  console.log(Videodata);
+  axios.put("http://localhost:3000/me/courses/"+Videodata.course_id+"/video", {
+    title:Videodata.title,
+    link:Videodata.link
   })
   .then((response) => {
     console.log(response);
@@ -158,6 +156,7 @@ AddVideo({ commit },course) {
     alert("Some Thing wrong , Please try to fix");
     commit("createst",false);
   });
+  store.dispatch("Course/getCourse", Videodata.course_id); 
 },
 ///
 Addpdf({ commit },course) {

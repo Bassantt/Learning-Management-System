@@ -24,6 +24,13 @@
         <p>Add Video to a course</p>
         <input
           type="text"
+          v-model="title"
+          class="form-control"
+          id="autoSizingInput"
+          placeholder="put a title"
+         />
+        <input
+          type="text"
           v-model="link"
           class="form-control"
           id="autoSizingInput"
@@ -64,18 +71,13 @@
 
       <div  class="tabcontent" v-if="showVideos">
         <div class="row">
-         <VideoCard
-             class="col-lg-100% col-md-60% col-xs-6"
-             key="index"
-             link="https://www.youtube.com/watch?v=ezbJwaLmOeM"
-          />
-
-          <!-- <VideoCard
+          <VideoCard
              class="col-lg-10% col-md-60% col-xs-6"
-             v-for="(syllab,index) in course[0].syllabus"
-             :key="index"
-             :link="index"
-          /> -->
+             v-for=" Video in course.course.activitiesAsVedio"
+             :key="Video[0].title"
+             :link="Video[0].link"
+             :title="Video[0].title"
+          />
         </div>
       </div>  
       <div  class="tabcontent" v-if="showQA">
@@ -130,7 +132,8 @@ export default {
       showQA:false,
       question:"",
       file:"",
-      link:""
+      link:"",
+      title:""
     };
   } ,
    created: function() {
@@ -180,7 +183,13 @@ export default {
      AddVideo()
     {
       console.log(this.link);
-      this.$store.dispatch("Course/AddVideo", this.link);
+      const Videodata={
+        course_id : this.course.course._id,
+        link : this.link,
+        title:this.title
+      }
+      this.$store.dispatch("Course/AddVideo", Videodata);
+      this.link=""
     },
      Addpdf()
     {
