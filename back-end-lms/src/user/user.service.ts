@@ -23,7 +23,15 @@ export class UserService {
         return user;
     }
 
-    async createUser(createUserDto: RegisterDto) {
+    async createUser(createUserDto: {
+        userName: string;
+        password: string;
+        email: string;
+        firstName: string;
+        lastName: string;
+        brithDay: string;
+        type?: string;
+    }) {
         if (await this.UserRepository.findByEmailORUserName(createUserDto.email))
             throw new HttpException('"email" should not have acount', HttpStatus.FORBIDDEN,);
         if (await this.UserRepository.findByEmailORUserName(createUserDto.userName))
@@ -32,7 +40,7 @@ export class UserService {
         const salt = await bcrypt.genSalt(10);
         let hash = await bcrypt.hash(createUserDto.password, salt);
         createUserDto.password = hash;
-        if (createUserDto.type && createUserDto.type == "admin") createUserDto.role = "Instructor";
+        if (createUserDto.type && createUserDto.type == "admin") createUserDto['role'] = "Instructor";
         return await this.UserRepository.createUser(createUserDto);
     }
 
@@ -60,6 +68,10 @@ export class UserService {
 
     async findAllUsers(): Promise<User[] | null> {
         return await this.UserRepository.findAll();
+    }
+
+    async findLearnerUsers() {
+        return await this.UserRepository.getUsersLearner();
     }
 
 

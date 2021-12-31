@@ -14,7 +14,15 @@ export class AuthController {
         private readonly authService: AuthService) { }
 
     @Post('/sign-up')
-    async create(@Body() user: RegisterDto) {
+    async create(@Body() user: {
+        userName: string;
+        password: string;
+        email: string;
+        firstName: string;
+        lastName: string;
+        brithDay: string;
+        type?: string;
+    }) {
         const createdUser = await this.userService.createUser(user);
         if (!createdUser) throw new Error('user not found');
         this.email.sendEmail(createdUser.email, "", 'confirm', createdUser.userName);

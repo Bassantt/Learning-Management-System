@@ -51,5 +51,11 @@ export class UserController {
         return await this.userService.findAllUsers();
     }
 
+    @Get('/users/learner')
+    async allLearner(): Promise<User[] | null> {
+        return await this.userService.findLearnerUsers();
+    }
+
+
 
 }
