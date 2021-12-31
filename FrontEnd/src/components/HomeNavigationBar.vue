@@ -85,6 +85,7 @@ export default {
   margin: 0%;
   height: 80px;
   z-index: 2000;
+ background-color: rgb(37, 91, 122);
 }
 ul {
   margin: 0%;

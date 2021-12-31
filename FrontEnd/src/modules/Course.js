@@ -101,15 +101,12 @@ export default {
     axios.defaults.headers.common["Authorization"] = localStorage.getItem("access-token");
     console.log(localStorage.getItem("access-token"));
     console.log(course);
-    axios.post("http://localhost:3000/me/courses", {
-      name:course.name,
-      description:course.description,
-      instructor:course.instructor,
-      syllabus:course.syllabus
+    axios.post("http://localhost:3000/courses?course_id="+course._id, {
+      question:course.question
     })
     .then((response) => {
       console.log(response);
-      alert("Done Create");
+      alert("Done Add");
       commit("createst",true);
     })
     .catch(err=> {
@@ -118,6 +115,72 @@ export default {
       commit("createst",false);
     });
 },
+/////////////
+Addreply({ commit },course) {
+  axios.defaults.headers.common["Authorization"] = localStorage.getItem("access-token");
+  console.log(localStorage.getItem("access-token"));
+  console.log(course);
+  axios.post("http://localhost:3000/", {
+    name:course.name,
+    description:course.description,
+    instructor:course.instructor,
+    syllabus:course.syllabus
+  })
+  .then((response) => {
+    console.log(response);
+    alert("Done Create");
+    commit("createst",true);
+  })
+  .catch(err=> {
+    console.log(err);
+    alert("Some Thing wrong , Please try to fix");
+    commit("createst",false);
+  });
+},
+////////
+AddVideo({ commit },course) {
+  axios.defaults.headers.common["Authorization"] = localStorage.getItem("access-token");
+  console.log(localStorage.getItem("access-token"));
+  console.log(course);
+  axios.post("http://localhost:3000/", {
+    name:course.name,
+    description:course.description,
+    instructor:course.instructor,
+    syllabus:course.syllabus
+  })
+  .then((response) => {
+    console.log(response);
+    alert("Done Create");
+    commit("createst",true);
+  })
+  .catch(err=> {
+    console.log(err);
+    alert("Some Thing wrong , Please try to fix");
+    commit("createst",false);
+  });
+},
+///
+Addpdf({ commit },course) {
+  axios.defaults.headers.common["Authorization"] = localStorage.getItem("access-token");
+  console.log(localStorage.getItem("access-token"));
+  console.log(course);
+  axios.post("http://localhost:3000/", {
+    name:course.name,
+    description:course.description,
+    instructor:course.instructor,
+    syllabus:course.syllabus
+  })
+  .then((response) => {
+    console.log(response);
+    alert("Done Create");
+    commit("createst",true);
+  })
+  .catch(err=> {
+    console.log(err);
+    alert("Some Thing wrong , Please try to fix");
+    commit("createst",false);
+  });
+}
   },
   getters: {
     getCourses: state => state.Courses,
