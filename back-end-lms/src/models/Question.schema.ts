@@ -9,8 +9,7 @@ export class Question {
     @prop({ required: true })
     @prop({ ref: Course })
     course: Ref<Course>;
-    @prop({ required: false, default: [] })
-    @prop({ ref: User })
-    replies?: [{ reply: String, user: Ref<User>, userName: string }]
+    @prop({ required: false })
+    replies?: [{}]
 
 }
