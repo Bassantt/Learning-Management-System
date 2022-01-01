@@ -159,16 +159,11 @@ AddVideo({ commit },Videodata) {
   store.dispatch("Course/getCourse", Videodata.course_id); 
 },
 ///
-Addpdf({ commit },course) {
+Addpdf({ commit },pdfodata) {
   axios.defaults.headers.common["Authorization"] = localStorage.getItem("access-token");
   console.log(localStorage.getItem("access-token"));
-  console.log(course);
-  axios.post("http://localhost:3000/", {
-    name:course.name,
-    description:course.description,
-    instructor:course.instructor,
-    syllabus:course.syllabus
-  })
+  console.log(pdfodata);
+  axios.post("http://localhost:3000/me/courses/"+pdfodata[0]+"/pdf", pdfodata[1])
   .then((response) => {
     console.log(response);
     alert("Done Create");
@@ -179,6 +174,7 @@ Addpdf({ commit },course) {
     alert("Some Thing wrong , Please try to fix");
     commit("createst",false);
   });
+  store.dispatch("Course/getCourse", pdfodata[0]); 
 }
   },
   getters: {

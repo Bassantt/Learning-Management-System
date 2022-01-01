@@ -10,7 +10,6 @@
         <button class="tablink" @click="QA()">QA</button>
         </div>
         <div class="conta ">
-        <!-- {{course[0]}} -->
         <h1>{{course.course.name}}</h1>
         <h2>
           {{course.course.description}}
@@ -19,6 +18,44 @@
           {{course.course.instructor}}
         </h2>
       </div>
+    <div class="d-flex justify-content-center h-100">
+      <div  class="tabcontent" v-if="showsyllabus">
+          <div class="row">
+              <SyllabusCard
+                class="col-lg-10% col-md-60% col-xs-6"
+                v-for="(syllab,index) in course.course.syllabus"
+                :key="index"
+                :week="index"
+                :description="syllab[0][0]"
+              />
+            </div>
+      </div>
+
+      <div  class="tabcontent" v-if="showPdfmaterial">
+       <div id="activities" v-if=" user.user.type=='Admin'||user.user.role=='Instructor'">
+       <h2>Add activities to a course</h2>
+       <!-- <p>Add Pdfmaterial to a course</p>
+        <input
+          type="file"
+          ref="fileInput"
+          accept="pdf/*"
+          @change="onFilePicked"
+          class="form-control"
+          id="autoSizingInput"
+          placeholder="upload a pdf"
+        />
+      <button @click="Addpdf" class="btn btn-primary">
+      Add a pdf
+      </button> -->
+          <input type="file" @change="onFileChange" />
+          <button @click="onUploadFile" class="upload-button"
+          :disabled="!this.selectedFile">Upload file</button>
+       </div>
+      <h3>News</h3>
+      <p>Some news this fine day!</p> 
+      </div>
+
+      <div  class="tabcontent" v-if="showVideos">
       <div id="activities" v-if=" user.user.type=='Admin'||user.user.role=='Instructor'">
         <h2>Add activities to a course</h2>
         <p>Add Video to a course</p>
@@ -39,37 +76,7 @@
       <button @click="AddVideo" class="btn btn-primary">
       Add a Video
       </button>
-        <p>Add Pdfmaterial to a course</p>
-        <input
-          type="file"
-          v-on="file"
-          class="form-control"
-          id="autoSizingInput"
-          placeholder="upload a pdf"
-      />
-      <button @click="Addpdf" class="btn btn-primary">
-      Add a pdf
-      </button>
-      </div> 
-    <div class="d-flex justify-content-center h-100">
-      <div  class="tabcontent" v-if="showsyllabus">
-          <div class="row">
-              <SyllabusCard
-                class="col-lg-10% col-md-60% col-xs-6"
-                v-for="(syllab,index) in course.course.syllabus"
-                :key="index"
-                :week="index"
-                :description="syllab[0][0]"
-              />
-            </div>
-      </div>
-
-      <div  class="tabcontent" v-if="showPdfmaterial">
-      <h3>News</h3>
-      <p>Some news this fine day!</p> 
-      </div>
-
-      <div  class="tabcontent" v-if="showVideos">
+    </div>
         <div class="row">
           <VideoCard
              class="col-lg-10% col-md-60% col-xs-6"
@@ -131,9 +138,9 @@ export default {
       showVideos:false,
       showQA:false,
       question:"",
-      file:"",
       link:"",
-      title:""
+      title:"",
+      selectedFile: "",
     };
   } ,
    created: function() {
@@ -189,14 +196,18 @@ export default {
         title:this.title
       }
       this.$store.dispatch("Course/AddVideo", Videodata);
-      this.link=""
+      this.link="";
     },
-     Addpdf()
-    {
-      console.log(this.file);
-      this.$store.dispatch("Course/Addpdf", this.file);
-    }
- 
+     onFileChange(e) {
+      const selectedFile = e.target.files[0]; // accessing file
+      this.selectedFile = selectedFile;
+    },
+    onUploadFile() {
+      const formData = new FormData();
+      formData.append("file", this.selectedFile);  // appending file
+      this.$store.dispatch("Course/Addpdf", [this.course.course._id,formData]);
+      this.selectedFile=""
+    } 
   },
   computed: {
     ...mapGetters({
