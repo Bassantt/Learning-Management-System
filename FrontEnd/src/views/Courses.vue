@@ -2,7 +2,7 @@
   <div class="cont">
       <HomeNavigation />
     <div>
-      <div class="contaner" >
+      <div class="contaner" v-if="isLoggedIn =='success'">
         <div class="all scroll">
           <h2>show All</h2>
           <div class="row">
@@ -89,6 +89,7 @@ export default {
   computed: {
     ...mapGetters({
       courses: "Course/getCourses",
+      isLoggedIn: "Authorization/GetStatus",
     })
   }
 };

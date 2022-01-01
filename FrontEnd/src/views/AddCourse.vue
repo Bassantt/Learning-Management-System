@@ -1,7 +1,7 @@
 <template>
   <div class="cont">
     <HomeNavigation />    
-    <div class="container">
+    <div class="container" v-if="isLoggedIn =='success'">
        <form class="row">
           <div class="col-auto">
             <label class="visually-hidden">coursename</label>
@@ -52,6 +52,7 @@
 
 <script>
 import HomeNavigation from "@/components/HomeNavigationBar.vue";
+import { mapGetters } from "vuex";
 export default {
   name: "AddCourse",
   components: {
@@ -67,6 +68,11 @@ export default {
     //   pdffiles:{},
     //   videos:{},
     };
+  },
+  computed: {
+    ...mapGetters({
+      isLoggedIn: "Authorization/GetStatus",
+    }),
   },
    methods: {
     // selectFile() {

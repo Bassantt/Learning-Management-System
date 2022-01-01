@@ -1,6 +1,7 @@
 <template>
   <div class="cont">
     <HomeNavigation id="nav" />
+    <div v-if="isLoggedIn =='success'">
     <Button class="btn float-right _btn" @click="showusers()" v-if="show==false">Show Users</Button>
     <Button class="btn float-right _btn" @click="hide()" v-if="show==true">Hide</Button>
     <div class="row" id="margn" v-if="show==true">
@@ -14,6 +15,7 @@
         :email="user.email"
         :type="user.type"
       />
+    </div>
     </div>
   </div>
 </template>
@@ -40,6 +42,7 @@ export default {
   computed: {
     ...mapGetters({
       users: "Authorization/users",
+      isLoggedIn: "Authorization/GetStatus",
     }),
   },
   methods:
@@ -84,7 +87,7 @@ color: black;
 background-color: rgb(107, 180, 185);
 width: 300px;
 margin-right: 5px;
-margin-top: 10px;
+margin-top: 40px;
 margin-bottom: 10px;
 }
 

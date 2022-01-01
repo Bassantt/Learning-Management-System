@@ -10,7 +10,6 @@ export default {
     User: {},
     msg:"",
     users:[],
-    loading:false
   },
   mutations: {
     auth(state,res) {
@@ -37,18 +36,6 @@ export default {
     {
    state.users=res;
     },
-    delete(done)
-    {
-      console.log(done);
-    },
-    setloading(state,res)
-    {
-      state.loading=res;
-    },
-    setarticals(state,response)
-    {
-      state.articals=response;
-    }
   },
   actions: {
     get_user({ commit }, flag) {
@@ -91,7 +78,6 @@ export default {
         email: member.Email,
         type: member.Type,
         brithDay:member.BirthDate,
-        role:member.role
       })
       .then((response) => {
         console.log(response);
@@ -129,7 +115,7 @@ export default {
         });
     },
     logout({ commit }) {
-      commit("logout");
+        commit("logout");
         localStorage.removeItem("access-token");
         delete axios.defaults.headers.common["Authorization"];
         console.log(localStorage);
@@ -195,7 +181,7 @@ export default {
      {
       axios.defaults.headers.common["x-access-token"] = localStorage.getItem("access-token");
       axios
-        .get("http://localhost:3000/users")
+        .get("http://localhost:3000/users/learner")
         .then((respons) => {
           console.log(respons);
           let result = respons.data;

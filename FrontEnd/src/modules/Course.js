@@ -190,7 +190,7 @@ getPdf({ commit},link) {
       .get("http://localhost:3000/courses/file/"+link)
       .then(respons => {
         let respdfodata = respons.data;
-        console.log(JSON.stringify(respons.data));
+        console.log(respdfodata);
         commit("setpdfodata", respdfodata);
       })
       .catch(error => {

@@ -1,7 +1,7 @@
 <template>
   <div class="cont">
     <HomeNavigation />
-    <div class="split">
+    <div class="split" v-if="isLoggedIn =='success'">
     <div >
         <div id="icon_cont">
         <button class="tablink" @click="syllabus()" id="defaultOpen">syllabus</button>
@@ -210,6 +210,7 @@ export default {
     ...mapGetters({
       course: "Course/getCourse",
       user:"Authorization/user",
+      isLoggedIn: "Authorization/GetStatus",
     })
   },
   
