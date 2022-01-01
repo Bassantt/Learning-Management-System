@@ -8,6 +8,7 @@ export default {
     myCourses: [],
     done:false,
     Course:{},
+    pdfodata:""
   },
   mutations: {
     setCourses(state, resCourses) {
@@ -23,6 +24,10 @@ export default {
     setCourse(state,res)
     {
       state.Course=res;
+    },
+    setpdfodata(state,res)
+    {
+      state.pdfodata=res;
     }
     
   },
@@ -175,11 +180,28 @@ Addpdf({ commit },pdfodata) {
     commit("createst",false);
   });
   store.dispatch("Course/getCourse", pdfodata[0]); 
-}
+},
+getPdf({ commit},link) {
+      const token = localStorage.getItem("access-token");
+      console.log(token);
+      console.log("hooo",link);
+      axios.defaults.headers.common["Authorization"] = token;
+    axios
+      .get("http://localhost:3000/courses/file/"+link)
+      .then(respons => {
+        let respdfodata = respons.data;
+        console.log("hhhh",respdfodata)
+        commit("setpdfodata", respdfodata);
+      })
+      .catch(error => {
+        console.log(error);
+      });
+  },
   },
   getters: {
     getCourses: state => state.Courses,
     getmyCourses: state => state.myCourses,
     getCourse: state => state.Course,
+    getpdfodata:state => state.pdfodata,
   }
 };

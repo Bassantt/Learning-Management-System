@@ -34,25 +34,20 @@
       <div  class="tabcontent" v-if="showPdfmaterial">
        <div id="activities" v-if=" user.user.type=='Admin'||user.user.role=='Instructor'">
        <h2>Add activities to a course</h2>
-       <!-- <p>Add Pdfmaterial to a course</p>
-        <input
-          type="file"
-          ref="fileInput"
-          accept="pdf/*"
-          @change="onFilePicked"
-          class="form-control"
-          id="autoSizingInput"
-          placeholder="upload a pdf"
-        />
-      <button @click="Addpdf" class="btn btn-primary">
-      Add a pdf
-      </button> -->
+          <p>Add Pdfmaterial to a course</p>
           <input type="file" @change="onFileChange" />
           <button @click="onUploadFile" class="upload-button"
           :disabled="!this.selectedFile">Upload file</button>
        </div>
-      <h3>News</h3>
-      <p>Some news this fine day!</p> 
+       <div class="row">
+          <PdfCard
+             class="col-lg-10% col-md-60% col-xs-6"
+             v-for=" Pdf in course.course.activitiesAsPDF"
+             :key="Pdf[0].title"
+             :link="Pdf[0].link"
+             :title="Pdf[0].title"
+          />
+        </div>
       </div>
 
       <div  class="tabcontent" v-if="showVideos">
@@ -123,13 +118,15 @@ import HomeNavigation from "@/components/HomeNavigationBar.vue";
 import SyllabusCard from "@/components/SyllabusCard.vue";
 import QACard from "@/components/QACard.vue";
 import VideoCard from  "@/components/VideoCard.vue";
+import PdfCard from  "@/components/PdfCard.vue";
 export default {
   name: "CoursePage",
   components: {
     HomeNavigation,
     SyllabusCard,
     QACard,
-    VideoCard
+    VideoCard,
+    PdfCard
   },
     data: function () {
     return {
