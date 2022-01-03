@@ -99,7 +99,6 @@ export class UserService {
         await this.UserRepository.checkUserIsInstructor(instructorId);
         const courses = await this.UserRepository.findSunset({ _id: instructorId }, { courses: 1, _id: 0 });
         var coursesWithData = [];
-        console.log(courses);
         if ((courses.courses) && (courses.courses != []))
             for (let i = 0; i < courses.courses.length; i++)
                 coursesWithData.push(await this.CourseRepository.getCourse(courses.courses[i][0]));
