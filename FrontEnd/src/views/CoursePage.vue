@@ -12,10 +12,10 @@
         <div class="conta ">
         <h1>{{course.course.name}}</h1>
         <h2>
-          {{course.course.description}}
+         desc: {{course.course.description}}
         </h2>
         <h2>
-          {{course.course.instructorInfo}}
+          instInfo:{{course.course.instructorInfo}}
         </h2>
       </div>
     <div class="d-flex justify-content-center h-100">
@@ -262,7 +262,7 @@ align-content: center;
 }
 .conta
 { 
-  background-image: url('../assets/course.jpg');
+  background-image: url('../assets/course.png');
   background-size: cover;
   background-repeat: no-repeat;
   color: black;
@@ -284,5 +284,9 @@ input
 {
   float: left;
   margin-bottom: 100px;
+}
+h1 
+{
+  font-style: italic;
 }
 </style>
