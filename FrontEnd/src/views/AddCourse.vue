@@ -1,7 +1,7 @@
 <template>
-  <div class="cont">
+  <div class="cont" v-if="isLoggedIn =='success'">
     <HomeNavigation />    
-    <div class="container" v-if="isLoggedIn =='success'">
+    <div class="container">
        <form class="row">
           <div class="col-auto">
             <label class="visually-hidden">coursename</label>

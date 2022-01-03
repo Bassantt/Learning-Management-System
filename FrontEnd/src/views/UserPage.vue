@@ -1,7 +1,7 @@
 <template>
-  <div class="cont">
+  <div class="cont" v-if="isLoggedIn =='success'">
     <HomeNavigation />
-  <div class=" row justify-content-center home px-0 m-0" v-if="isLoggedIn =='success'">
+  <div class=" row justify-content-center home px-0 m-0" >
      <div class="col-sm-70%" id="edit_div" >
         <h2>My Profile</h2>
         <p>Your Type is : {{user.user.type}}</p>

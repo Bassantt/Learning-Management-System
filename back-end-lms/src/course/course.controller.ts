@@ -100,7 +100,7 @@ export class CourseController {
         return { courses };
     }
 
-    @UseGuards(AuthGuard('jwt'))
+    // @UseGuards(AuthGuard('jwt'))
     @Get('/courses/file/:link')
     getFile(@Res() res: Response, @Param() params) {
         const file = createReadStream(join(process.cwd(), '../uploads/' + params.link));

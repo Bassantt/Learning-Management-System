@@ -1,7 +1,7 @@
 <template>
-  <div class="cont">
+  <div class="cont" v-if="isLoggedIn =='success'">
     <HomeNavigation id="nav" />
-    <div v-if="isLoggedIn =='success'">
+    <div >
     <Button class="btn float-right _btn" @click="showusers()" v-if="show==false">Show Users</Button>
     <Button class="btn float-right _btn" @click="hide()" v-if="show==true">Hide</Button>
     <div class="row" id="margn" v-if="show==true">

@@ -1,8 +1,8 @@
  <template>
-  <div class="cont">
+  <div class="cont" v-if="isLoggedIn =='success'">
       <HomeNavigation />
     <div>
-      <div class="contaner" v-if="isLoggedIn =='success'">
+      <div class="contaner" >
         <div class="all scroll">
           <h2>show All</h2>
           <div class="row">

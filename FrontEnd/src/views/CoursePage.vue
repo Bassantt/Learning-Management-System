@@ -1,7 +1,7 @@
 <template>
-  <div class="cont">
+  <div class="cont" v-if="isLoggedIn =='success'">
     <HomeNavigation />
-    <div class="split" v-if="isLoggedIn =='success'">
+    <div class="split">
     <div >
         <div id="icon_cont">
         <button class="tablink" @click="syllabus()" id="defaultOpen">syllabus</button>
@@ -44,7 +44,7 @@
              class="col-lg-10% col-md-60% col-xs-6"
              v-for=" Pdf in course.course.activitiesAsPDF"
              :key="Pdf[0].title"
-             :link="Pdf[0].link"
+             :link="'http://localhost:3000/courses/file/'+Pdf[0].link"
              :title="Pdf[0].title"
           />
         </div>
@@ -193,6 +193,7 @@ export default {
         title:this.title
       }
       this.$store.dispatch("Course/AddVideo", Videodata);
+      this.title="";
       this.link="";
     },
      onFileChange(e) {
