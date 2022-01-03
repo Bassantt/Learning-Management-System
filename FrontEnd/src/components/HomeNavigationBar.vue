@@ -18,11 +18,11 @@
           <a>All Courses</a>
         </router-link>
 
-        <router-link :to="{ path: '/InstructorCourses/'+ user.user._id }"  tag="li"  v-if="isLoggedIn =='success' && (user.user.type=='Admin'||user.user.role=='Instructor')   ">
+        <router-link :to="{ path: '/InstructorCourses/'+ user.user._id }"  tag="li"  v-if="isLoggedIn =='success' && (user.user.type=='Admin'|| user.user.type=='admin'||user.user.role=='Instructor')   ">
           <a>MyCourses</a>
         </router-link>
 
-        <router-link :to="{ path: '/AddCourse/'+ user.user._id }"  tag="li"  v-if="isLoggedIn =='success' && (user.user.type=='Admin'||user.user.role=='Instructor') ">
+        <router-link :to="{ path: '/AddCourse/'+ user.user._id }"  tag="li"  v-if="isLoggedIn =='success' && (user.user.type=='Admin'|| user.user.type=='admin'||user.user.role=='Instructor') ">
           <a>AddCourse</a>
         </router-link>
 
