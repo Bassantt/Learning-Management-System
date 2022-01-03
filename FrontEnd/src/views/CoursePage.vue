@@ -10,7 +10,7 @@
         <button class="tablink" @click="QA()">QA</button>
         </div>
         <div class="conta ">
-        <h1>{{course.course.name}}</h1>
+        <h1>{{course.name}}</h1>
         <h2>
           {{course.course.description}}
         </h2>
