@@ -74,7 +74,8 @@ export default {
         name:course.name,
         description:course.description,
         instructor:course.instructor,
-        syllabus:course.syllabus
+        syllabus:course.syllabus,
+        instructorInfo:course.instructorInfo
       })
       .then((response) => {
         console.log(response);
@@ -113,7 +114,7 @@ export default {
     .then((response) => {
       console.log(response);
       store.dispatch("Course/getCourse", course._id); 
-      alert("Done Add");
+      // alert("Done Add");
       commit("createst",true);
     })
     .catch(err=> {
@@ -133,7 +134,7 @@ Addreply({ commit},replydata) {
   .then((response) => {
     console.log(response);
     store.dispatch("Course/getCourse", replydata.course_id); 
-    alert("Done Create");
+    // alert("Done Create");
     commit("createst",true);
   })
   .catch(err=> {
@@ -154,7 +155,7 @@ AddVideo({ commit },Videodata) {
   .then((response) => {
     console.log(response);
     store.dispatch("Course/getCourse", Videodata.course_id); 
-    alert("Done Create");
+    // alert("Done");
     commit("createst",true);
   })
   .catch(err=> {
@@ -173,7 +174,7 @@ Addpdf({ commit },pdfodata) {
   .then((response) => {
     console.log(response);
     store.dispatch("Course/getCourse", pdfodata[0]); 
-    alert("Done Create");
+    // alert("Done Create");
     commit("createst",true);
   })
   .catch(err=> {

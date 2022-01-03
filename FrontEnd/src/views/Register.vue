@@ -41,24 +41,6 @@
               id="autoSizingInput"
               placeholder="Email"
             />
-            <el-select
-              class="form-control"
-              v-model="Type"
-              placeholder="Type"
-            >
-              <el-option
-                id="opt"
-                class="form-control"
-                label="Admin"
-                value="Admin"
-              ></el-option>
-              <el-option
-                id="opt"
-                class="form-control"
-                label="Customer"
-                value="Customer"
-              ></el-option>
-            </el-select>
             <p >BirthDate</p>
             <input
               type="date"
@@ -104,7 +86,6 @@ export default {
         FirstName: this.FirstName,
         LastName: this.LastName,
         Email: this.Email,
-        Type: this.Type,
         BirthDate:this.BirthDate
       };
       console.log(newMember);
@@ -115,7 +96,6 @@ export default {
       this.FirstName = "";
       this.LastName = "";
       this.Email = "";
-      this.Type = "";
     },
   },
    computed: {

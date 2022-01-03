@@ -22,7 +22,7 @@
             />
             <input
               type="text"
-              v-model="instructor"
+              v-model="instructorInfo"
               class="form-control"
               id="autoSizingInput"
               placeholder="info about you"
@@ -65,6 +65,7 @@ export default {
       instructor:"",
       syllabus:[],
       syllab:"",
+      instructorInfo:""
     //   pdffiles:{},
     //   videos:{},
     };
@@ -72,36 +73,18 @@ export default {
   computed: {
     ...mapGetters({
       isLoggedIn: "Authorization/GetStatus",
+      user:"Authorization/user",
     }),
   },
    methods: {
-    // selectFile() {
-    //  this.file=this.$refs.file.files[0];
-    // },
-    // Add() {
-    // let formData = new FormData();
-    // for( var i = 0; i < this.$refs.file.files.length; i++ ){
-    //     let file = this.$refs.file.files[i];
-    //     formData.append('files[' + i + ']', file);
-    // }
-    // console.log(formData);
-    // },
-    // print()
-    // {
-    // let formData = new FormData();
-    // for( var i = 0; i < this.$refs.file.files.length; i++ ){
-    //     let file = this.$refs.file.files[i];
-    //     formData.append('files[' + i + ']', file);
-    // }
-    // console.log(formData);
-    // },
     Create(e)
     {
     const newcourse = {
       name:this.name,
       description:this.description,
-      instructor:this.instructor,
-      syllabus:this.syllabus
+      instructor:this.user.user._id,
+      syllabus:this.syllabus,
+      instructorInfo:this.instructorInfo
       };
       console.log(newcourse);
       this.$store.dispatch("Course/create", newcourse);
@@ -110,6 +93,7 @@ export default {
       this.description="";
       this.instructor="";
       this.syllabus=[];
+      this.instructorInfo=""
     },
     Addsyllabus(e)
     {  e.preventDefault();
