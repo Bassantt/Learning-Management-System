@@ -38,7 +38,7 @@ export class UserService {
         const salt = await bcrypt.genSalt(10);
         let hash = await bcrypt.hash(createUserDto.password, salt);
         createUserDto.password = hash;
-        if (createUserDto.type && createUserDto.type == "admin") createUserDto['role'] = "Instructor";
+        if (createUserDto.type && createUserDto.type.toLowerCase() == "admin") createUserDto['role'] = "Instructor";
         return await this.UserRepository.createUser(createUserDto);
     }
 

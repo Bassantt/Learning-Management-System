@@ -30,7 +30,7 @@ export class UserRepository extends BaseRepository<User>  {
 
     async changeUSerRole(userName, adminId) {
         const admin = await this.findByID(adminId);
-        if (!admin || admin.type != "admin") throw new HttpException('this task can be done only be admins', HttpStatus.UNAUTHORIZED);
+        if (!admin || admin.type.toLowerCase() != "admin") throw new HttpException('this task can be done only be admins', HttpStatus.UNAUTHORIZED);
         const user = await this.findByEmailORUserName(userName);
         if (user && (user.role && user.role == "Learner") || !user.role) await this.update(user.id, { role: "Instructor" })
         else throw new HttpException('user is instrucror', HttpStatus.BAD_REQUEST);
