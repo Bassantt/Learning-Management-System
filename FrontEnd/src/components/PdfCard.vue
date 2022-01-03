@@ -17,11 +17,6 @@ export default {
       type: String
     }
   },
-  //  created: function() {
-  //   this.$store.dispatch(
-  //     "Course/getPdf",
-  //     this.link
-  //   );},
       computed: {
     ...mapGetters({
       pdfodata: "Course/getpdfodata",
@@ -35,7 +30,7 @@ export default {
     }   
   }
 };
-// /path/to/chrome_binary –allow-file-access-from-files -disable-web-security
+
 </script>
 
 <style scoped>
@@ -49,6 +44,8 @@ a{
   background-color: rgba(238, 247, 247, 0.404);
   border: 1px solid rgba(34, 38, 39, 0.322);
   padding: 5px 5px;
+  width: 80%;
+  margin-left: 10%;
 }
 
 </style>
