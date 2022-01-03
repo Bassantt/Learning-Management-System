@@ -87,9 +87,9 @@ export class UserService {
         await this.UserRepository.delete(userID);
     }
 
-    async createCourse(userId, course: { description: string; name: string; syllabus?: [{ week_number: Number, title: String }]; }) {
+    async createCourse(userId, course: { description: string; name: string; instructorInfo?: string; syllabus?: [{ week_number: Number, title: String }]; }) {
         await this.UserRepository.checkUserIsInstructor(userId);
-        var courseData: CreateDto = { description: course.description, name: course.name, instructor: userId, syllabus: course.syllabus };
+        var courseData: CreateDto = { description: course.description, name: course.name, instructor: userId, syllabus: course.syllabus, instructorInfo: course.instructorInfo };
         const createdcourse = await this.CourseRepository.createCourse(courseData);
         await this.UserRepository.addCourseToUser(userId, createdcourse._id);
         return createdcourse;
