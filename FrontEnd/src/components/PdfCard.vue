@@ -40,7 +40,8 @@ export default {
 
 <style scoped>
 a{
-  color: black;
+  color: rgb(37, 91, 122);
+  font-size: 30PX;
 }
 
 #app
