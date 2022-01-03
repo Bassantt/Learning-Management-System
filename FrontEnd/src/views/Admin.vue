@@ -11,7 +11,7 @@
         :Id="user._id"
         :userName="user.userName"
         :email="user.email"
-        :type="user.type"
+        :role="user.role"
       />
     </div>
     </div>

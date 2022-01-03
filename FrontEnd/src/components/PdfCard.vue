@@ -1,22 +1,6 @@
 <template>
   <div id="app">
-    <!-- <a  target="_blank"  href="file:///C:/Users/ali73/OneDrive/Desktop/Learning-Management-System/uploads/Consultation_Project_Requirements-ee47.pdf"
-    >Home</a>
-    <a  target="_blank"  href="../uploads/Consultation_Project_Requirements-ee47.pdf"
-    >Home</a> -->
-    <h1>{{title}}</h1>
-    <!-- <h2>{{link}}</h2> -->
-    <!-- 
-     <router-link :to="{ path: 'http://localhost:3000/courses/file/'+ this.link }"  tag="li">
-          <a target="_blank"> view pdf </a>
-      </router-link>
-       -->
-    <a :download=this.link :href=this.link target="_blank" > view a pdf</a>
-   
-    <!-- <link rel="icon" :href=this.link>  -->
-    <!-- {{pdfodata}} -->
-    <!-- <button @click="show">click</button>  -->
-    <!-- <vue-pdf-embed :src=link> show a pdf</vue-pdf-embed> -->
+    <a :download=this.link :href=this.link target="_blank" > {{title}}</a>  
 </div>
 </template>
 
@@ -57,12 +41,8 @@ export default {
 <style scoped>
 a{
   color: black;
-  float: right;
 }
-h1 
-{
-  float: left;
-}
+
 #app
 {
   background-color: rgba(238, 247, 247, 0.404);

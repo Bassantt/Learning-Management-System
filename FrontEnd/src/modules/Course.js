@@ -182,23 +182,7 @@ Addpdf({ commit },pdfodata) {
     alert("Some Thing wrong , Please try to fix");
     commit("createst",false);
   });
-},
-getPdf({ commit},link) {
-      const token = localStorage.getItem("access-token");
-      console.log(token);
-      console.log("hooo",link);
-      axios.defaults.headers.common["Authorization"] = token;
-    axios
-      .get("http://localhost:3000/courses/file/"+link)
-      .then(respons => {
-        let respdfodata = respons.data;
-        console.log(respdfodata);
-        commit("setpdfodata", respdfodata);
-      })
-      .catch(error => {
-        console.log(error);
-      });
-  },
+}
   },
   getters: {
     getCourses: state => state.Courses,

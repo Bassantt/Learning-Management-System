@@ -70,29 +70,19 @@ export default {
 </script>
 
 <style scoped>
-#cardimg
-{
-  /* background-image: url('../assets/SyllabusCard.jpg');
-  background-size: cover; */
-  width:100%;
-}
 .round {
   border-radius: 10px;
   background-color: rgb(110, 106, 106);
 }
 .card {
-  background-color: #1312122c;
+  background-image: url('../assets/qu.jpg');
+  background-size: cover;
   width:80%;
   height:auto;
   margin-left: 50px;
   margin-right: 20px;
   margin-top: 18px;
   border-radius: 10px;
-}
-#cardimg {
-  width: 100%;
-  height: 200px;
-  margin-bottom: 10px;
 }
 h4 {
   font-size: 22px;
@@ -112,7 +102,7 @@ input
 }
 h1
 {
-  background-color: rgba(37, 91, 122, 0.664);
+  background-color: rgba(73, 73, 73, 0.425);
   border-radius: 1px;
 }
 </style>

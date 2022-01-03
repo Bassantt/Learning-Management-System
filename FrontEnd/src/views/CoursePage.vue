@@ -14,9 +14,6 @@
         <h2>
           {{course.course.description}}
         </h2>
-           <h2>
-          {{course.course.instructor}}
-        </h2>
         <h2>
           {{course.course.instructorInfo}}
         </h2>
@@ -29,7 +26,7 @@
                 v-for="(syllab,index) in course.course.syllabus"
                 :key="index"
                 :week="index"
-                :description="syllab[0][0]"
+                :description="syllab[0][index]"
               />
             </div>
       </div>

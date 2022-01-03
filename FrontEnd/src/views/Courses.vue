@@ -13,7 +13,7 @@
               :name="Course.name"
               :CourseId="Course._id"
               :description="Course.description"
-              :ins="Course.instructor"
+              :instructorInfo="Course.instructorInfo"
             />
           </div>
         </div>

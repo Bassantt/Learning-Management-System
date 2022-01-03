@@ -14,7 +14,7 @@
           <a>Home</a>
         </router-link>
 
-        <router-link :to="{ path: '/Courses/'+ user.user._id }"  tag="li"  v-if="isLoggedIn =='success' && (user.user.type=='Admin'||user.user.role=='Learner')   ">
+        <router-link :to="{ path: '/Courses/'+ user.user._id }"  tag="li"  v-if="isLoggedIn =='success' && (user.user.type=='Admin'|| user.user.type=='admin'||user.user.role=='Learner')   ">
           <a>Courses</a>
         </router-link>
 
@@ -38,7 +38,7 @@
         <router-link to="/Register" tag="li" v-if="isLoggedIn !='success' " >
         <a>Register</a>
         </router-link>
-        <router-link :to="{ path: '/Admin/' + user.user._id }" tag="li" v-if="isLoggedIn =='success' && user.user.type=='Admin'" >
+        <router-link :to="{ path: '/Admin/' + user.user._id }" tag="li" v-if="isLoggedIn =='success' && (user.user.type=='Admin'|| user.user.type=='admin')" >
         <a>Admin's Control</a>
         </router-link>
         <Button class="btn float-right logout_btn" @click="logout()" v-if="isLoggedIn=='success'">Log out </Button>

@@ -4,8 +4,12 @@
   <div class=" row justify-content-center home px-0 m-0" >
      <div class="col-sm-70%" id="edit_div" >
         <h2>My Profile</h2>
-        <p>Your Type is : {{user.user.type}}</p>
+        <p v-if="user.user.type=='customer'">Your Role is : {{user.user.role}}</p>
+        <p v-if="(user.user.type=='Admin'|| user.user.type=='admin')">Your Role is : {{user.user.type}}</p>
         <ul>
+          <li>
+           Email :{{user.user.email}}
+          </li>
           <li>
             Username :<input id="username"  v-model="user.user.userName" type="text" class="form-control" >
           </li>
@@ -15,9 +19,7 @@
           <li>
            LastName :<input  v-model="user.user.lastName" type="text" class="form-control" >
           </li>
-          <li>
-           Email :<input  v-model="user.user.email" type="text" class="form-control" >
-          </li>
+
           <li>
            BirthDate : <input  v-model="user.user.brithDay" type="date" class="form-control" >
           </li>

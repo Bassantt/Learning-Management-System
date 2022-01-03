@@ -13,8 +13,8 @@
         ></router-link>
       </div>
     </div>
-    <h4>{{description}}</h4>
-    <h4> {{ins}}</h4>
+    description:<h4>{{description}}</h4>
+    instructorInfo:<h4> {{instructorInfo}}</h4>
   </div>
 </template>
 
@@ -64,7 +64,7 @@ export default {
     CourseId: {
       type: String
     },
-    ins: {
+    instructorInfo: {
       type: String
     }
   }

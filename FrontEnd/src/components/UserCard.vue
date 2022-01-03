@@ -7,7 +7,7 @@
         <br/>
         <h3>email: {{ email }}</h3>
         <br/>
-        <h3>type: {{ type }}</h3>
+        <h3>role: {{ role }}</h3>
         <br/>
       <button @click="changerole" class="change"> make as instractor</button>
       </td>
@@ -20,7 +20,7 @@ export default {
   name: "UserCard",
   props: {
     Id: {
-      type: String,
+      role: String,
     },
     userName: {
       type: String,
@@ -28,7 +28,7 @@ export default {
     email: {
       type: String,
     },
-    type: {
+    role: {
       type: String,
     },
   },

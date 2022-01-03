@@ -76,7 +76,6 @@ export default {
         firstName: member.FirstName,
         lastName: member.LastName,
         email: member.Email,
-        type: member.Type,
         brithDay:member.BirthDate,
       })
       .then((response) => {
@@ -136,12 +135,12 @@ export default {
           oldPassword: newdataa.oldPassword,
           firstName: newdataa.firstName,
           lastName: newdataa.lastName,
-          // email: this.user.email,
           brithDay:newdataa.brithDay,
           password:newdataa.password
         })
         .then((response) => {
           console.log(response);
+          store.dispatch("Authorization/get_user", false);
           commit("auth","success");
         })
         .catch(err=> {
@@ -161,6 +160,7 @@ export default {
         })
         .then((response) => {
           console.log(response);
+          store.dispatch("Authorization/get_user", false);
           commit("auth","success");
         })
         .catch(err=> {
@@ -168,8 +168,6 @@ export default {
           commit("auth","Some Thing wrong , Please try other user Name and all fied check is it not empty");
         }); 
       }
-          
-       store.dispatch("Authorization/get_user", false);
        }
        else
        {
@@ -186,7 +184,6 @@ export default {
           console.log(respons);
           let result = respons.data;
           console.log(result);
-          console.log(result[0]);
           commit("setusers", result);
         })
         .catch((error) => {
