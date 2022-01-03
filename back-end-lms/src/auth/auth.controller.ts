@@ -3,14 +3,12 @@ import { AuthService } from "./auth.service";
 import { UserService } from "../user/user.service";
 import { JwtStrategy } from './jwt.strategy';
 import { AuthGuard } from '@nestjs/passport';
-import { Email } from './send-email.service';
 import { RegisterDto } from './dto/register.dto';
 import { LoginDto } from './dto/login.dto';
 
 @Controller()
 export class AuthController {
     constructor(private readonly userService: UserService,
-        private readonly email: Email,
         private readonly authService: AuthService) { }
 
     @Post('/sign-up')
@@ -25,7 +23,6 @@ export class AuthController {
     }) {
         const createdUser = await this.userService.createUser(user);
         if (!createdUser) throw new Error('user not found');
-        this.email.sendEmail(createdUser.email, "", 'confirm', createdUser.userName);
         const token = await this.authService.signPayload({ _id: createdUser._id });
         return { "token": token };
     }
@@ -44,7 +41,6 @@ export class AuthController {
     async delete(@Request() req) {
         const user = await this.userService.getUserByID(req.user._id);
         await this.userService.deleteUser(req.user._id);
-        this.email.sendEmail(user.email, "", "Delete account", user.userName);
         return;
     }
 

@@ -7,7 +7,6 @@ import { User } from "../models/user.schema";
 import { Course } from "../models/course.schema";
 import { JwtStrategy } from './jwt.strategy';
 import { SharedModule } from '../shared/shared.module';
-import { Email } from './send-email.service';
 import { UserRepository } from '../user/user-repository.service';
 import { CourseRepository } from '../course/course-repository.service';
 
@@ -21,7 +20,6 @@ import { CourseRepository } from '../course/course-repository.service';
     AuthService,
     JwtStrategy,
     UserService,
-    Email,
     UserRepository,
     CourseRepository
   ],
