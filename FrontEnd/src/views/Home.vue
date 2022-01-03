@@ -4,8 +4,7 @@
     <div class=" row justify-content-center home px-0 m-0">
       <div class="justify-content-center divcont ">
       <h3 >Learning-Management-System</h3>
-      <h6 >Learning-Management-System Learning-Management-System</h6>
-      <h6>Learning-Management-System Learning-Management-System</h6>
+      <h6 >Wellcome to our System</h6>
           <router-link 
             :to="{ path: '/UserPage/' +userid}"
             tag="li"

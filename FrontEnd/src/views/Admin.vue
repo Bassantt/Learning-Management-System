@@ -2,9 +2,7 @@
   <div class="cont" v-if="isLoggedIn =='success'">
     <HomeNavigation id="nav" />
     <div >
-    <Button class="btn float-right _btn" @click="showusers()" v-if="show==false">Show Users</Button>
-    <Button class="btn float-right _btn" @click="hide()" v-if="show==true">Hide</Button>
-    <div class="row" id="margn" v-if="show==true">
+    <div class="row" id="margn" >
       <h1>Users</h1>
       <UserCard
         class="col-lg-50% col-md-30% col-xs-6"
@@ -45,18 +43,6 @@ export default {
       isLoggedIn: "Authorization/GetStatus",
     }),
   },
-  methods:
-  {
-    showusers()
-    {
-     this.show=true;
-    }
-    ,
-    hide()
-    {
-     this.show=false;
-    }
-  }
 };
 </script>
 

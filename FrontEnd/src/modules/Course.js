@@ -133,7 +133,7 @@ Addreply({ commit},replydata) {
   .then((response) => {
     console.log(response);
     store.dispatch("Course/getCourse", replydata.course_id); 
-    alert("Done Create");
+    // alert("Done Create");
     commit("createst",true);
   })
   .catch(err=> {
@@ -154,7 +154,7 @@ AddVideo({ commit },Videodata) {
   .then((response) => {
     console.log(response);
     store.dispatch("Course/getCourse", Videodata.course_id); 
-    alert("Done Create");
+    alert("Done");
     commit("createst",true);
   })
   .catch(err=> {
