@@ -14,8 +14,11 @@
         <h2>
           {{course.course.description}}
         </h2>
-        <h2>
+           <h2>
           {{course.course.instructor}}
+        </h2>
+        <h2>
+          {{course.course.instructorInfo}}
         </h2>
       </div>
     <div class="d-flex justify-content-center h-100">
