@@ -32,7 +32,7 @@
       </div>
 
       <div  class="tabcontent" v-if="showPdfmaterial">
-       <div id="activities" v-if=" user.user.type=='Admin'||user.user.role=='Instructor'">
+       <div id="activities" v-if="(user.user.role=='Instructor'&&user.user._id==course.course.instructor)">
        <h2>Add activities to a course</h2>
           <p>Add Pdfmaterial to a course</p>
           <input type="file" @change="onFileChange" />
@@ -51,7 +51,7 @@
       </div>
 
       <div  class="tabcontent" v-if="showVideos">
-      <div id="activities" v-if=" user.user.type=='Admin'||user.user.role=='Instructor'">
+      <div id="activities" v-if="(user.user.role=='Instructor'&&user.user._id==course.course.instructor)">
         <h2>Add activities to a course</h2>
         <p>Add Video to a course</p>
         <input

@@ -1,7 +1,7 @@
 <template>
   <div class="row" id="reply">
-    <h4 class="col-2">{{userName}}</h4>:
-    <h4 class="col-8">{{reply}}</h4>
+    <h4 class="col-4">{{userName}}</h4>:
+    <h4 class="col-6">{{reply}}</h4>
   </div>
 </template>
 
