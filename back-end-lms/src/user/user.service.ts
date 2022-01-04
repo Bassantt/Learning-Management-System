@@ -15,7 +15,8 @@ export class UserService {
 
     }
     async getUserByID(userID): Promise<User | null> {
-        const user = await this.UserRepository.findByID(userID);
+        console.log(userID);
+        const user = await this.UserRepository.findOne({ _id: userID });
         if (!user)
             throw new HttpException('Unauthorized access', HttpStatus.UNAUTHORIZED);
         return user;

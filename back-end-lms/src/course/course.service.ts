@@ -9,16 +9,16 @@ export class CourseService {
         private readonly CourseRepository: CourseRepository
     ) { }
 
-    async updateCourse(userId, courseId, updatedData) {
-        await this.CourseRepository.updateCourse(userId, courseId, updatedData);
+    async updateCourse(userId, courseId, updatedData, userType: string) {
+        await this.CourseRepository.updateCourse(userId, courseId, updatedData, userType);
     }
 
-    async addPdfToCourse(userId, courseId, file) {
-        await this.CourseRepository.updateCourse(userId, courseId, { $push: { activitiesAsPDF: { link: file.filename, title: file.originalname } } });
+    async addPdfToCourse(userId, courseId, file, userType: string) {
+        await this.CourseRepository.updateCourse(userId, courseId, { $push: { activitiesAsPDF: { link: file.filename, title: file.originalname } } }, userType);
     }
 
-    async addVedioToCourse(userId, courseId, vedioBody: { title: String, link: String }) {
-        await this.CourseRepository.updateCourse(userId, courseId, { $push: { activitiesAsVedio: vedioBody } });
+    async addVedioToCourse(userId, courseId, vedioBody: { title: String, link: String }, userType: string) {
+        await this.CourseRepository.updateCourse(userId, courseId, { $push: { activitiesAsVedio: vedioBody } }, userType);
     }
 
     async addQuestionToCourse(courseId, question: string) {

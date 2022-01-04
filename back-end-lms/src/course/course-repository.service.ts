@@ -20,7 +20,10 @@ export class CourseRepository extends BaseRepository<Course>  {
         return await this.create(course);
     }
 
-    async updateCourse(instructorId, courseId, updatedData: {}) {
+    async updateCourse(instructorId, courseId, updatedData: {}, userType: string) {
+        if (userType.toLowerCase() == "admin")
+            if (!await this.updateByData({ _id: courseId }, updatedData))
+                throw new HttpException('this is not a course!', HttpStatus.BAD_REQUEST);
         if (!await this.updateByData({ _id: courseId, instructor: instructorId }, updatedData))
             throw new HttpException('You do not the instructor of this course', HttpStatus.FORBIDDEN);
     }
@@ -37,7 +40,7 @@ export class CourseRepository extends BaseRepository<Course>  {
         return course;
     }
 
-    async getAllCourses(){
+    async getAllCourses() {
         return await this.findAll();
     }
 

@@ -41,13 +41,15 @@ export class CourseController {
     @UseGuards(AuthGuard('jwt'))
     @Put('/me/courses/:course_id')
     async updateCourse(@Request() req, @Param() Params, @Body() courseData: { description?: string; name?: string; instructorInfo?: string; syllabus?: [{ week_number: Number, title: String }]; }) {
-        return await this.courseService.updateCourse(req.user._id, Params.course_id, courseData);
+        const user = await this.userService.getUserByID(req.user._id);
+        return await this.courseService.updateCourse(req.user._id, Params.course_id, courseData, user.type);
     }
 
     @UseGuards(AuthGuard('jwt'))
     @Put('/me/courses/:course_id/video')
     async addVideo(@Request() req, @Param() Params, @Body() videoData: { title: String, link: String }) {
-        return await this.courseService.addVedioToCourse(req.user._id, Params.course_id, videoData);
+        const user = await this.userService.getUserByID(req.user._id);
+        return await this.courseService.addVedioToCourse(req.user._id, Params.course_id, videoData, user.type);
     }
 
     @UseGuards(AuthGuard('jwt'))
@@ -83,7 +85,8 @@ export class CourseController {
         }),
     }))
     async uploadpdf(@UploadedFile() file, @Param() Params, @Request() req) {
-        await this.courseService.addPdfToCourse(req.user._id, Params.course_id, file);
+        const user = await this.userService.getUserByID(req.user._id);
+        await this.courseService.addPdfToCourse(req.user._id, Params.course_id, file, user.type);
     }
 
     @UseGuards(AuthGuard('jwt'))
