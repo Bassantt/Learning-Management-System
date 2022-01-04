@@ -10,6 +10,7 @@ import { SharedModule } from '../shared/shared.module';
 import { UserRepository } from '../user/user-repository.service';
 import { CourseRepository } from '../course/course-repository.service';
 
+
 @Module({
   imports: [SharedModule,
     TypegooseModule.forFeature([User]),

@@ -6,7 +6,6 @@ export class AuthService {
     constructor(private userService: UserService) { }
 
     async signPayload(payload) {
-        console.log(payload._id)
         return (
             'Bearer ' +
             sign(payload, process.env.SECRET_KEY, { expiresIn: '67472347632732h' })

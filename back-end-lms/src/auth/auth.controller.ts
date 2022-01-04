@@ -31,11 +31,10 @@ export class AuthController {
     async login(@Body() loginDto: LoginDto) {
         const user = await this.userService.findByLogin(loginDto);
         if (!user) throw new Error('user not found');
-        console.log(user)
-        console.log("weweweweweew")
         const token = await this.authService.signPayload({ _id: user._id, });
         return { "token": token };
     }
+
 
     // should takeToken not body param
     @UseGuards(AuthGuard('jwt'))

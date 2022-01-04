@@ -21,10 +21,11 @@ export class CourseRepository extends BaseRepository<Course>  {
     }
 
     async updateCourse(instructorId, courseId, updatedData: {}, userType: string) {
-        if (userType.toLowerCase() == "admin")
+        if (userType.toLowerCase() == "admin") {
             if (!await this.updateByData({ _id: courseId }, updatedData))
                 throw new HttpException('this is not a course!', HttpStatus.BAD_REQUEST);
-        if (!await this.updateByData({ _id: courseId, instructor: instructorId }, updatedData))
+        }
+        else if (!await this.updateByData({ _id: courseId, instructor: instructorId }, updatedData))
             throw new HttpException('You do not the instructor of this course', HttpStatus.FORBIDDEN);
     }
 
