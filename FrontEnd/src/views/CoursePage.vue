@@ -12,12 +12,17 @@
         <div class="conta ">
         <h1>{{course.course.name}}</h1>
         <h2>
-          {{course.course.description}}
+         desc: {{course.course.description}}
         </h2>
-        <h2>
-          {{course.course.instructorInfo}}
+        <h1 v-if="(user.user.role=='Instructor'&&user.user._id==course.course.instructor)"> by:you</h1>
+        <h2 v-if="(user.user._id!=course.course.instructor)">
+          instInfo:{{course.course.instructorInfo}}
+        </h2>
+        <h2 v-if="(user.user._id==course.course.instructor)">
+          yourInfo:{{course.course.instructorInfo}}
         </h2>
       </div>
+
     <div class="d-flex justify-content-center h-100">
       <div  class="tabcontent" v-if="showsyllabus">
           <div class="row">
@@ -32,7 +37,7 @@
       </div>
 
       <div  class="tabcontent" v-if="showPdfmaterial">
-       <div id="activities" v-if=" user.user.type=='Admin'||user.user.role=='Instructor'">
+       <div id="activities" v-if="(user.user.type=='Admin'|| user.user.type=='admin')||(user.user.role=='Instructor'&&user.user._id==course.course.instructor)">
        <h2>Add activities to a course</h2>
           <p>Add Pdfmaterial to a course</p>
           <input type="file" @change="onFileChange" />
@@ -51,7 +56,7 @@
       </div>
 
       <div  class="tabcontent" v-if="showVideos">
-      <div id="activities" v-if=" user.user.type=='Admin'||user.user.role=='Instructor'">
+      <div id="activities" v-if="(user.user.type=='Admin'|| user.user.type=='admin')||(user.user.role=='Instructor'&&user.user._id==course.course.instructor)">
         <h2>Add activities to a course</h2>
         <p>Add Video to a course</p>
         <input
@@ -262,7 +267,7 @@ align-content: center;
 }
 .conta
 { 
-  background-image: url('../assets/course.jpg');
+  background-image: url('../assets/course.png');
   background-size: cover;
   background-repeat: no-repeat;
   color: black;
@@ -284,5 +289,9 @@ input
 {
   float: left;
   margin-bottom: 100px;
+}
+h1 
+{
+  font-style: italic;
 }
 </style>
